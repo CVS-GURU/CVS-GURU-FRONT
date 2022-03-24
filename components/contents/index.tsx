@@ -45,7 +45,7 @@ const Contents = () => {
         {testArray?.map((contents) => {
           return (
             <Col span={12} key={contents.contentesId}>
-              <div style={{ padding: '1em' }}>
+              <div style={{ paddingTop: '1em' }}>
                 <Card contentsInfo={contents} />
               </div>
             </Col>

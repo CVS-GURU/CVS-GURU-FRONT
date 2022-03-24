@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const St = {
   ContentCardWrapper: styled.div`
-    border-radius: 4px;
+    padding: 2rem;
+    border-radius: 8px;
     border: 1px solid grey;
   `,
   ImageContainer: styled.div`
@@ -10,6 +11,23 @@ const St = {
       width: 100%;
       height: 100%;
       background-size: cover;
+    }
+  `,
+  RatingContainer: styled.div`
+    padding: 1rem 0;
+    span {
+      padding: 0 2px;
+    }
+    .score {
+      font-weight: 700;
+    }
+    .icon {
+      color: voilet;
+    }
+    .rating_count {
+      font-size: 1.2rem;
+      color: grey;
+      font-weight: 700;
     }
   `,
 };
@@ -32,13 +50,17 @@ const ContentCard = (contentsInfo: ContentCardProps) => {
         />
       </St.ImageContainer>
       <div>
-        <span> 주) 토핑 2배 참치마요</span>
+        <span style={{ fontSize: '18px', fontWeight: 800 }}>
+          주) 토핑 2배 참치마요
+        </span>
       </div>
-      <div>
-        <span>4.5</span>
-        <span>별</span>
-        <span>(130)</span>
-      </div>
+      <St.RatingContainer className="flex">
+        <div className="flex-center">
+          <span className="score">4.5</span>
+          <span className="icon">별</span>
+          <span className="rating_count">(130)</span>
+        </div>
+      </St.RatingContainer>
     </St.ContentCardWrapper>
   );
 };
