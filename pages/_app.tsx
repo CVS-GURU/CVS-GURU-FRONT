@@ -47,7 +47,10 @@ const app = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>CVS-GURU</title>
         <link rel="shortcut icon" href="/images/your.ico" />
-
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+          rel="stylesheet"
+        />
         <link
           rel="stylesheet"
           type="text/css"

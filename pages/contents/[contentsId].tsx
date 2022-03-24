@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { wrapper } from 'store';
+import ContentDetail from 'components/contents/ContentDetail';
 
 const St = {
   Wrapper: styled.div`
@@ -11,9 +12,13 @@ const St = {
   `,
 };
 
-const DataPage = (props: any) => {
-  const { id } = props;
-  return <St.Wrapper>{id}</St.Wrapper>;
+const ContentDetailPage = (props: any) => {
+  const { contentsId } = props;
+  return (
+    <St.Wrapper>
+      <ContentDetail />
+    </St.Wrapper>
+  );
 };
 
 // SSR (프론트 서버에서 실행)
@@ -21,11 +26,11 @@ const DataPage = (props: any) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query: queryParam }) => {
-      const { id } = queryParam;
+      const { contentsId } = queryParam;
       return {
-        props: { id },
+        props: { contentsId },
       };
     },
 );
 
-export default DataPage;
+export default ContentDetailPage;
