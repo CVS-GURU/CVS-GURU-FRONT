@@ -11,9 +11,7 @@ const Layout = dynamic(() => import('components/base/Layout'), {
 const Main: NextPage = () => {
   return (
     <>
-      <Layout>
-        <Home />
-      </Layout>
+      <Home />
     </>
   );
 };

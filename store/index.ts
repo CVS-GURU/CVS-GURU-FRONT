@@ -7,10 +7,12 @@ import {
 import data from './data';
 import common from './common';
 import filter from './filter';
+import modal from './modal';
 const rootReducer = combineReducers({
   data: data.reducer,
   common: common.reducer,
   filter: filter.reducer,
+  modal: modal.reducer,
   /* store reducer를 위와 같은 형식처럼 넣어주세요.*/
 });
 

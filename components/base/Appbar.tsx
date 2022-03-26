@@ -73,7 +73,6 @@ const St = {
 const Appbar = () => {
   useEffect(() => {}, []);
   const links = [{ name: 'Search', path: '/search' }];
-
   return (
     <St.AppbarWrapper>
       <St.HeaderContainerLeft className="header-container-left">
@@ -85,13 +84,7 @@ const Appbar = () => {
         </Link>
       </St.HeaderContainerLeft>
       <St.HeaderContaineRight id="right">
-        <St.HeaderLinkWrapper>
-          {links.map((link, index) => (
-            <Link key={index} href={link.path}>
-              <li>{link.name}</li>
-            </Link>
-          ))}
-        </St.HeaderLinkWrapper>
+        <St.HeaderLinkWrapper></St.HeaderLinkWrapper>
       </St.HeaderContaineRight>
     </St.AppbarWrapper>
   );

@@ -31,6 +31,7 @@ const app = ({ Component, pageProps }: AppProps) => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <Toggle themeMode={theme} toggleTheme={toggleTheme} />
+      <div id="root-modal" />
       <Layout>
         <Component {...pageProps} title="" />
       </Layout>

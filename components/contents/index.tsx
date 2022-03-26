@@ -4,6 +4,7 @@ import FilterButton from 'components/contents/filter/FilterButton';
 import { useDispatch } from 'react-redux';
 import { useSelector, RootState } from 'store';
 import { filterActions } from 'store/filter';
+import { modalActions } from 'store/modal';
 import Filter from 'components/contents/filter/Filter';
 
 const item = {
@@ -22,13 +23,19 @@ const Contents = () => {
   );
   const dispatch = useDispatch();
   const handleFilterOpen = () => {
-    console.log('isFilterOpen= ', isFilterOpen);
-    dispatch(filterActions.setIsFilterOpen(!isFilterOpen));
+    dispatch(
+      modalActions.setModal({
+        open: true,
+        type: 'filter',
+        isNeedBackgroundClickBlock: true,
+      }),
+    );
+    //dispatch(filterActions.isFilterOpen(!isFilterOpen));
   };
   const handleFilterButtonClick = () => {};
   return (
     <>
-      <Filter />
+      {/* <Filter /> */}
       <div>
         <button onClick={handleFilterOpen} type="button">
           필터

@@ -43,6 +43,11 @@ const modal = createSlice({
       state.modal.cancelButttonMessage = '취소';
       state.modal.isNeedBackgroundClickBlock = false;
       state.modal.isToast = false;
+      state.modal.isMultipleLayer = false; //모달에서 또 모달을 띄워야 할 때 사용
+      state.modal.multipleLayerType = ''; //모달에서 또 모달을 띄워야 할 때 사용
+      state.modal.className = '';
+      state.modal.confirmFunction = null;
+      state.modal.cancelFunction = null;
     },
   },
 });
