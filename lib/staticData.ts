@@ -38,6 +38,65 @@ export const dayList = Array.from(Array(31), (_, i) => String(i + 1));
 //* 2020년부터 1900년까지
 export const yearList = Array.from(Array(121), (_, i) => String(2020 - i));
 
+export const CONTENTS_LIST = [
+  {
+    contentesId: '1',
+    image_path: 'http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg',
+    title: '주) 토핑 2배 참치마요',
+    description: '',
+    rating: '4.5',
+    review_count: 130,
+  },
+  {
+    contentesId: '2',
+    image_path: 'http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg',
+    title: '주) 토핑 2배 참치마요',
+    description: '',
+    rating: '4.5',
+    review_count: 130,
+  },
+  {
+    contentesId: '3',
+    image_path: 'http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg',
+    title: '주) 토핑 2배 참치마요',
+    description: '',
+    rating: '4.5',
+    review_count: 130,
+  },
+  {
+    contentesId: '4',
+    image_path: 'http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg',
+    title: '주) 토핑 2배 참치마요',
+    description: '',
+    rating: '4.5',
+    review_count: 130,
+  },
+  {
+    contentesId: '2',
+    image_path: 'http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg',
+    title: '주) 토핑 2배 참치마요',
+    description: '',
+    rating: '4.5',
+    review_count: 130,
+  },
+  {
+    contentesId: '3',
+    image_path: 'http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg',
+    title: '주) 토핑 2배 참치마요',
+    description: '',
+    rating: '4.5',
+    review_count: 130,
+  },
+  {
+    contentesId: '4',
+    image_path: 'http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg',
+    title: '주) 토핑 2배 참치마요',
+    description: '',
+    rating: '4.5',
+    review_count: 130,
+  },
+];
+
 export const filterButtonDataList = [
   {
     title: '카테고리',
