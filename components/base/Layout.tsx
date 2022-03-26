@@ -61,11 +61,11 @@ const Layout = ({ children }: Props) => {
         <St.LayoutWrapper>
           <St.HomeSection>
             <Row>
-              <Col xs={0} sm={2} md={4} lg={4} xl={4}></Col>
-              <Col xs={24} sm={20} md={16} lg={16} xl={16}>
+              <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
+              <Col xs={24} sm={20} md={20} lg={18} xl={18}>
                 {children}
               </Col>
-              <Col xs={0} sm={2} md={4} lg={4} xl={4}></Col>
+              <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
             </Row>
           </St.HomeSection>
         </St.LayoutWrapper>

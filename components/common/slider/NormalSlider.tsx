@@ -107,7 +107,7 @@ const NormalSlider: React.FC<NormalSliderProps> = ({}) => {
   return (
     <>
       <St.SliderTitleWrapper>
-        <h1 style={{ fontSize: '2rem', fontWeight: 900 }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 900, position: 'relative' }}>
           <span> 최근 등록되었어요!</span>
           <div className="line"></div>
         </h1>

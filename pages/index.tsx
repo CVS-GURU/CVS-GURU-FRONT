@@ -4,9 +4,6 @@ import dynamic from 'next/dynamic';
 import { getDatasThunk } from 'store/data';
 import { wrapper } from 'store';
 import Home from 'components/home';
-const Layout = dynamic(() => import('components/base/Layout'), {
-  ssr: true,
-});
 
 const Main: NextPage = () => {
   return (
