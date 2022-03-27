@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import NormalSlider from 'components/common/slider/NormalSlider';
 import MainSearchInput from 'components/home/MainSearchInput';
 import RankTrand from 'components/home/RankTrand';
+import CVSViewer from 'components/home/CVSViewer';
+import CategoryViewer from 'components/home/CategoryViewer';
+import Description from 'components/home/Description';
 const St = {
   MainDisplayContainer: styled.div`
     position: relative;
@@ -45,6 +48,9 @@ const Home = () => {
           <p>편의점 그루</p>
         </St.TextContainer>
         <RankTrand />
+        <CVSViewer />
+        <Description />
+        <CategoryViewer />
       </St.MainDisplayContainer>
 
       <NormalSlider />
