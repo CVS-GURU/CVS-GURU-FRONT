@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head';
+import Footer from 'components/base/Footer';
 import Appbar from 'components/base/Appbar';
 import ModalPortal from 'components/base/ModalPortal';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -8,6 +9,7 @@ import { useSelector, RootState } from 'store';
 import { Row, Col } from 'antd';
 import { modalActions } from 'store/modal';
 import styled from 'styled-components';
+import Filter from 'components/contents/filter/Filter';
 type Props = {
   children: ReactNode;
 };
@@ -17,7 +19,6 @@ const St = {
     height: 100%;
     min-height: 100vh;
     position: relative;
-
     background: ${(props) => props.theme.colors.primary};
   `,
 
@@ -37,6 +38,10 @@ const St = {
 
 const Layout = ({ children }: Props) => {
   const modal = useSelector((state: RootState) => state.modal.modal);
+  const isFilterOpen = useSelector(
+    (state: RootState) => state.filter.isFilterOpen,
+  );
+
   const dispatch = useDispatch();
   const closeModal = () => {
     if (!modal.isNeedBackgroundClickBlock) {
@@ -47,6 +52,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <St.AllWrapper>
+        {<Filter />}
         <Appbar />
         {/* 모달 포탈 선언 */}
         <ModalPortal
@@ -57,7 +63,6 @@ const Layout = ({ children }: Props) => {
         >
           <ModalContainer closeModal={closeModal} />
         </ModalPortal>
-
         <St.LayoutWrapper>
           <St.HomeSection>
             <Row>
@@ -69,6 +74,7 @@ const Layout = ({ children }: Props) => {
             </Row>
           </St.HomeSection>
         </St.LayoutWrapper>
+        <Footer />
       </St.AllWrapper>
     </>
   );

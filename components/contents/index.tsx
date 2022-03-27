@@ -5,7 +5,22 @@ import { useDispatch } from 'react-redux';
 import { useSelector, RootState } from 'store';
 import { filterActions } from 'store/filter';
 import { modalActions } from 'store/modal';
+import iconMap from 'lib/iconMap';
 import Filter from 'components/contents/filter/Filter';
+import styled from 'styled-components';
+
+const St = {
+  ButtonContainer: styled.div`
+    cursor: pointer;
+    flex-wrap: wrap;
+    display: flex;
+    padding: 10px;
+    border: 2px solid black;
+    width: 80px;
+    border-radius: 8px;
+    font-weight: bold;
+  `,
+};
 
 const item = {
   contentesId: '',
@@ -23,24 +38,24 @@ const Contents = () => {
   );
   const dispatch = useDispatch();
   const handleFilterOpen = () => {
-    dispatch(
-      modalActions.setModal({
-        open: true,
-        type: 'filter',
-        isNeedBackgroundClickBlock: true,
-      }),
-    );
-    //dispatch(filterActions.isFilterOpen(!isFilterOpen));
+    // dispatch(
+    //   modalActions.setModal({
+    //     open: true,
+    //     type: 'filter',
+    //     isNeedBackgroundClickBlock: true,
+    //   }),
+    // );
+    dispatch(filterActions.setIsFilterOpen(!isFilterOpen));
   };
   const handleFilterButtonClick = () => {};
   return (
     <>
-      {/* <Filter /> */}
       <div>
-        <button onClick={handleFilterOpen} type="button">
-          필터
-        </button>
-        <div className="flex-space-between">
+        <St.ButtonContainer onClick={handleFilterOpen} type="button">
+          {iconMap['FilterOutlined']}
+          <span>필터</span>
+        </St.ButtonContainer>
+        <div className="flex">
           <FilterButton title="많은 후기순" />
           <FilterButton title="인기순" />
           <FilterButton title="가격 많은 순" />
