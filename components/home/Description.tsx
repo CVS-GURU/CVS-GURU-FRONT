@@ -4,8 +4,19 @@ import {
   HeartOutlined,
 } from '@ant-design/icons';
 import styled from 'styled-components';
+import iconmap from 'lib/iconMap';
 
 const St = {
+  Title: styled.div`
+    margin: 5rem 0;
+    font-size: 3rem;
+    font-weight: 900;
+  `,
+  IconContainer: styled.div`
+    padding: 2rem;
+    font-size: 200%;
+  `,
+
   DescriptionWrapper: styled.div`
     flex-wrap: wrap;
     display: flex;
@@ -30,25 +41,45 @@ const St = {
       max-width: 240px;
     }
   `,
+  Description: styled.div`
+    font-weight: bold;
+  `,
 };
-const DescriptionItem = () => {
+const DescriptionItem = ({ icon, title }) => {
   return (
     <St.DescriptionCard>
-      <div>
-        <SearchOutlined />
-      </div>
-      <div>평소에 먹던 음식을 검색해보세요.</div>
+      <St.IconContainer className="flex-center">
+        {iconmap[icon]}
+      </St.IconContainer>
+      <St.Description>
+        <span>{title}</span>
+      </St.Description>
     </St.DescriptionCard>
   );
 };
 const Description = () => {
   return (
-    <div className="flex-column" style={{ width: '100%' }}>
-      <h1>디스크립션 콘테이너</h1>
+    <div
+      className="flex-column"
+      style={{ width: '100%', marginBottom: '3rem' }}
+    >
+      <hr />
+      <St.Title className="flex-center">
+        <span> 내돈 내산을 위한 올바른 리뷰생활</span>
+      </St.Title>
       <St.DescriptionWrapper>
-        <DescriptionItem />
-        <DescriptionItem />
-        <DescriptionItem />
+        <DescriptionItem
+          icon="SearchOutlined"
+          title="평소에 먹던 음식을 검색해보세요."
+        />
+        <DescriptionItem
+          icon="CommentOutlined"
+          title="리뷰를 남기고 사람들과 공유해보세요."
+        />
+        <DescriptionItem
+          icon="HeartOutlined"
+          title="좋아요와 하트를 눌러서 저장해봐요."
+        />
       </St.DescriptionWrapper>
     </div>
   );

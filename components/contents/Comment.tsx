@@ -26,9 +26,11 @@ const St = {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: aqua;
+    background: grey;
   `,
-  CommentTextContainer: styled.div``,
+  CommentTextContainer: styled.div`
+    text-align: left;
+  `,
 };
 const Comment = () => {
   return (

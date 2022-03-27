@@ -7,7 +7,7 @@ import Link from 'next/link';
 const St = {
   AppbarWrapper: styled.div`
     z-index: 1;
-    width: 89%;
+    width: 100%;
     margin: 0 auto;
     max-width: 1184px;
     height: 60px;
@@ -16,12 +16,18 @@ const St = {
     position: relative;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 1px;
   `,
 
   HeaderContainerLeft: styled.div``,
   HeaderContainerLogoWrapper: styled.div`
     min-width: 200px;
     height: 50px;
+    cursor: pointer;
+    h1 {
+      font-size: 2rem;
+      font-weight: 900;
+    }
     img {
       height: 100%;
       width: 100%;
@@ -39,7 +45,7 @@ const St = {
   HeaderLinkWrapper: styled.ul`
     display: flex;
     flex-direction: row;
-
+    cursor: pointer;
     margin: auto;
     a {
       text-decoration: none;
@@ -54,7 +60,7 @@ const St = {
         color 0.2s ease;
     }
     li {
-      color: ${palette.blue_4};
+      font-weight: bold;
       margin: 0 0.8rem;
       font-size: 1.3rem;
       position: relative;
@@ -64,7 +70,6 @@ const St = {
     .active {
       background-color: #f1f3f5;
       li {
-        color: ${palette.blue_7};
       }
     }
   `,
@@ -77,14 +82,24 @@ const Appbar = () => {
     <St.AppbarWrapper>
       <St.HeaderContainerLeft className="header-container-left">
         <Link href={'/'}>
-          <St.HeaderContainerLogoWrapper>
-            CVS-GURU
+          <St.HeaderContainerLogoWrapper className="flex-center">
+            <h1>CVS-GURU</h1>
             {/* <img src="/static/images/logo.png" alt="logo" /> */}
           </St.HeaderContainerLogoWrapper>
         </Link>
       </St.HeaderContainerLeft>
       <St.HeaderContaineRight id="right">
-        <St.HeaderLinkWrapper></St.HeaderLinkWrapper>
+        <St.HeaderLinkWrapper>
+          <Link href="/contents">
+            <li>찾아보기</li>
+          </Link>
+          <Link href="/my-page">
+            <li>마이 페이지</li>
+          </Link>
+          <Link href="/about">
+            <li>about</li>
+          </Link>
+        </St.HeaderLinkWrapper>
       </St.HeaderContaineRight>
     </St.AppbarWrapper>
   );

@@ -78,7 +78,7 @@ const SliderRender = forwardRef<Slider, SliderRenderProps>((props, ref) => {
 });
 type NormalSliderProps = {};
 
-const NormalSlider: React.FC<NormalSliderProps> = ({}) => {
+const NormalSlider: React.FC<NormalSliderProps> = ({ title }) => {
   const router = useRouter();
   const isFirstRender = useRef(true);
   const contentstList = CONTENTS_LIST;
