@@ -13,6 +13,7 @@ const St = {
   ImageContainer: styled.div`
     min-width: 400px;
     max-width: 500px;
+    margin: auto;
     img {
       width: 100%;
       height: 100%;
