@@ -10,6 +10,8 @@ import { Row, Col } from 'antd';
 import { modalActions } from 'store/modal';
 import styled from 'styled-components';
 import Filter from 'components/contents/filter/Filter';
+import useWindowSize, { Size } from 'hooks/useWindowSize';
+import { useRouter } from 'next/router';
 type Props = {
   children: ReactNode;
 };
@@ -37,11 +39,13 @@ const St = {
 };
 
 const Layout = ({ children }: Props) => {
+  const router = useRouter();
+  const isContentsPage = router.pathname.indexOf('/conetents') !== -1;
   const modal = useSelector((state: RootState) => state.modal.modal);
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
-
+  const size: Size = useWindowSize();
   const dispatch = useDispatch();
   const closeModal = () => {
     if (!modal.isNeedBackgroundClickBlock) {
@@ -49,10 +53,32 @@ const Layout = ({ children }: Props) => {
     }
   };
 
+  let body = (
+    <Row>
+      <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
+      <Col xs={24} sm={20} md={20} lg={18} xl={18}>
+        {children}
+      </Col>
+      <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
+    </Row>
+  );
+
+  if (isContentsPage && size && size.width && size?.width >= 1024) {
+    body = (
+      <Row>
+        <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
+        <Col xs={24} sm={20} md={20} lg={18} xl={18}>
+          {children}
+        </Col>
+        <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
+      </Row>
+    );
+  }
+
   return (
     <>
       <St.AllWrapper>
-        {<Filter />}
+        <Filter />
         <Appbar />
         {/* 모달 포탈 선언 */}
         <ModalPortal
@@ -64,15 +90,7 @@ const Layout = ({ children }: Props) => {
           <ModalContainer closeModal={closeModal} />
         </ModalPortal>
         <St.LayoutWrapper>
-          <St.HomeSection>
-            <Row>
-              <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
-              <Col xs={24} sm={20} md={20} lg={18} xl={18}>
-                {children}
-              </Col>
-              <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
-            </Row>
-          </St.HomeSection>
+          <St.HomeSection>{body}</St.HomeSection>
         </St.LayoutWrapper>
         <Footer />
       </St.AllWrapper>

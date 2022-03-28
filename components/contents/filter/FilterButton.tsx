@@ -5,6 +5,7 @@ type StyledFilterButtonWrapper = {
 };
 const St = {
   FilterButtonWrapper: styled.div<StyledFilterButtonWrapper>`
+    cursor: pointer;
     border-radius: 20px;
     padding: 1.2rem;
     border: 2px solid black;
@@ -17,12 +18,14 @@ const St = {
 };
 
 type FilterButtonProps = {
+  id: string;
   title: string;
   handleFilterButtonClick?: (key: string) => void;
   isSelected?: boolean;
 };
 
 const FilterButton = ({
+  id,
   title = '',
   handleFilterButtonClick,
   isSelected = false,
@@ -34,7 +37,7 @@ const FilterButton = ({
     <St.FilterButtonWrapper
       isSelected={isSelected}
       onClick={handleButtonClick}
-      id=""
+      id={id}
     >
       <span>{title}</span>
     </St.FilterButtonWrapper>

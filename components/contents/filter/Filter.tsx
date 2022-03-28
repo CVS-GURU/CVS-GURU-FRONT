@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { Slider } from 'antd';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
@@ -52,6 +53,8 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
   const handleSilder = (value: [number, number]) => {
     setRating(value);
   };
+  const router = useRouter();
+
   if (filterButtonData.type === 'silder') {
     return (
       <St.FilterContainer>

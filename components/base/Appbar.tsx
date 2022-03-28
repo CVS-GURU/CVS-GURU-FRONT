@@ -3,20 +3,22 @@ import styled from 'styled-components';
 import { Button } from 'components/common';
 import palette from 'styles/palette';
 import Link from 'next/link';
-
+import iconMap from 'lib/iconMap';
 const St = {
   AppbarWrapper: styled.div`
     z-index: 1;
     width: 100%;
     margin: 0 auto;
     max-width: 1184px;
-    height: 60px;
+    height: 80px;
     min-height: 40px;
     display: flex;
     position: relative;
     justify-content: space-between;
     align-items: center;
     box-shadow: 1px;
+
+    box-shadow: 0 -2px 12px 0 rgb(0 0 0 / 6%), 0 -1px 4px 0 rgb(0 0 0 / 18%);
   `,
 
   HeaderContainerLeft: styled.div``,
@@ -80,16 +82,18 @@ const Appbar = () => {
   const links = [{ name: 'Search', path: '/search' }];
   return (
     <St.AppbarWrapper>
-      <St.HeaderContainerLeft className="header-container-left">
+      <St.HeaderContainerLeft className="header-container-left flex">
         <Link href={'/'}>
           <St.HeaderContainerLogoWrapper className="flex-center">
             <h1>CVS-GURU</h1>
             {/* <img src="/static/images/logo.png" alt="logo" /> */}
           </St.HeaderContainerLogoWrapper>
         </Link>
+        <input />
       </St.HeaderContainerLeft>
       <St.HeaderContaineRight id="right">
         <St.HeaderLinkWrapper>
+          {iconMap.MenuOutlined}
           <Link href="/contents">
             <li>찾아보기</li>
           </Link>

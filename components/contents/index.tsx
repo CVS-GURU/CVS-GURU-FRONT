@@ -8,6 +8,7 @@ import { modalActions } from 'store/modal';
 import iconMap from 'lib/iconMap';
 import Filter from 'components/contents/filter/Filter';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const St = {
   ButtonContainer: styled.div`
@@ -33,33 +34,45 @@ const item = {
 
 const testArray = [item, item, item, item];
 const Contents = () => {
+  const router = useRouter();
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
   const dispatch = useDispatch();
   const handleFilterOpen = () => {
-    // dispatch(
-    //   modalActions.setModal({
-    //     open: true,
-    //     type: 'filter',
-    //     isNeedBackgroundClickBlock: true,
-    //   }),
-    // );
     dispatch(filterActions.setIsFilterOpen(!isFilterOpen));
   };
-  const handleFilterButtonClick = () => {};
+  const handleFilterButtonClick = (id: string) => {
+    router.push(`/contents?order=${id}`);
+  };
   return (
     <>
       <div>
-        <St.ButtonContainer onClick={handleFilterOpen} type="button">
+        <St.ButtonContainer onClick={handleFilterOpen}>
           {iconMap['FilterOutlined']}
           <span>필터</span>
         </St.ButtonContainer>
         <div className="flex">
-          <FilterButton title="많은 후기순" />
-          <FilterButton title="인기순" />
-          <FilterButton title="가격 많은 순" />
-          <FilterButton title="가격 높은 순" />
+          <FilterButton
+            title="많은 후기순"
+            handleFilterButtonClick={handleFilterButtonClick}
+            id="review"
+          />
+          <FilterButton
+            title="인기순"
+            id="most"
+            handleFilterButtonClick={handleFilterButtonClick}
+          />
+          <FilterButton
+            title="가격 많은 순"
+            id="high"
+            handleFilterButtonClick={handleFilterButtonClick}
+          />
+          <FilterButton
+            title="가격 높은 순"
+            id="low"
+            handleFilterButtonClick={handleFilterButtonClick}
+          />
         </div>
       </div>
 
