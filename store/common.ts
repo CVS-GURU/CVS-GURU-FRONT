@@ -1,9 +1,9 @@
 /* Filter + image 통합 test */
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CommonState } from "types";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CommonState } from 'types';
 
 export const getDatasThunk = createAsyncThunk(
-  "board/getDatas",
+  'board/getDatas',
   // eslint-disable-next-line consistent-return
   async (_, thunkAPI) => {
     try {
@@ -13,20 +13,28 @@ export const getDatasThunk = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
-  }
+  },
 );
 
 const initialState: CommonState = {
   validateMode: false,
   isSidebarOpen: true,
+  isMobileMenuListOpen: false,
 };
 
 const common = createSlice({
-  name: "common",
+  name: 'common',
   initialState,
   reducers: {
     setIsSidebarOpen(state, action: PayloadAction<boolean>) {
       state.isSidebarOpen = action.payload;
+    },
+    setIsMobileMenuListOpen(state, action: PayloadAction<boolean>) {
+      if (action.payload) {
+        state.isMobileMenuListOpen = action.payload;
+        return;
+      }
+      state.isMobileMenuListOpen = !state.isMobileMenuListOpen;
     },
   },
   extraReducers(builder) {

@@ -54,7 +54,9 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
     setRating(value);
   };
   const router = useRouter();
+  console.log(router.query);
 
+  const handleFilterButtonClick = (e: any) => {};
   if (filterButtonData.type === 'silder') {
     return (
       <St.FilterContainer>
@@ -71,7 +73,12 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
       <St.FilterTitle>{filterButtonData.title}</St.FilterTitle>
       <St.FilterButtonContainer className="flex-row">
         {filterButtonData.buttonData.map((buttonData) => {
-          return <FilterButton title={buttonData.buttonTitle} />;
+          return (
+            <FilterButton
+              title={buttonData.buttonTitle}
+              handleFilterButtonClick={handleFilterButtonClick}
+            />
+          );
         })}
       </St.FilterButtonContainer>
     </St.FilterContainer>

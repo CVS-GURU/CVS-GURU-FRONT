@@ -8,6 +8,9 @@ import Layout from 'components/base/Layout';
 import Toggle from 'components/common/Toggle';
 import { darkTheme, lightTheme } from 'styles/theme';
 import { useDarkMode } from 'hooks/useDarkMode';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+
+import { ReactQueryDevtools } from 'react-query/devtools';
 import 'antd/dist/antd.css';
 import 'styles/index.css';
 import 'slick-carousel/slick/slick.css';
@@ -22,20 +25,27 @@ declare global {
 const app = ({ Component, pageProps }: AppProps) => {
   const [theme, toggleTheme] = useDarkMode();
   const [isMounted, setIsMounted] = React.useState(false);
+  const [queryClient] = React.useState(() => new QueryClient());
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   const body = (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <GlobalStyle />
-      <Toggle themeMode={theme} toggleTheme={toggleTheme} />
-      <div id="root-modal" />
-      <Layout>
-        <Component {...pageProps} title="" />
-      </Layout>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+          <GlobalStyle />
+          <Toggle themeMode={theme} toggleTheme={toggleTheme} />
+          <div id="root-modal" />
+          <Layout>
+            <Component {...pageProps} title="" />
+          </Layout>
+        </ThemeProvider>
+      </Hydrate>
+
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 
   // prevents ssr flash for mismatched dark mode

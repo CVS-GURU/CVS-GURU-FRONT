@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Button } from 'components/common';
-import palette from 'styles/palette';
+import { useDispatch } from 'react-redux';
+import { commonActions } from 'store/common';
 import Link from 'next/link';
 import iconMap from 'lib/iconMap';
+import useWindowSize, { Size } from 'hooks/useWindowSize';
+
 const St = {
   AppbarWrapper: styled.div`
     z-index: 1;
     width: 100%;
     margin: 0 auto;
-    max-width: 1184px;
+
     height: 80px;
     min-height: 40px;
     display: flex;
@@ -78,8 +80,15 @@ const St = {
 };
 
 const Appbar = () => {
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
+  const size: Size = useWindowSize();
+  const isMoblie = size && size.width && size?.width < 720;
   const links = [{ name: 'Search', path: '/search' }];
+
+  const handleOpenMobileMenu = () => {
+    dispatch(commonActions.setIsMobileMenuListOpen(null));
+  };
+
   return (
     <St.AppbarWrapper>
       <St.HeaderContainerLeft className="header-container-left flex">
@@ -92,17 +101,23 @@ const Appbar = () => {
         <input />
       </St.HeaderContainerLeft>
       <St.HeaderContaineRight id="right">
-        <St.HeaderLinkWrapper>
-          {iconMap.MenuOutlined}
-          <Link href="/contents">
-            <li>찾아보기</li>
-          </Link>
-          <Link href="/my-page">
-            <li>마이 페이지</li>
-          </Link>
-          <Link href="/about">
-            <li>about</li>
-          </Link>
+        <St.HeaderLinkWrapper className="flex-center">
+          {isMoblie && (
+            <div onClick={handleOpenMobileMenu}>{iconMap.MenuOutlined}</div>
+          )}
+          {!isMoblie && (
+            <>
+              <Link href="/contents">
+                <li>찾아보기</li>
+              </Link>
+              <Link href="/my-page">
+                <li>마이 페이지</li>
+              </Link>
+              <Link href="/about">
+                <li>about</li>
+              </Link>
+            </>
+          )}
         </St.HeaderLinkWrapper>
       </St.HeaderContaineRight>
     </St.AppbarWrapper>

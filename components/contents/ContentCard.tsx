@@ -33,30 +33,26 @@ const St = {
 };
 
 type ContentCardProps = {
-  contentsId: string;
-  image_path: string;
-  title: string;
-  description?: string;
-  rating: string;
-  review_count: number;
+  contentsInfo: {
+    ITEM_NAME: string;
+    ITEM_PRICE: string;
+    ITEM_IMAGE: string;
+  };
 };
-const ContentCard = (contentsInfo: ContentCardProps) => {
+const ContentCard = ({ contentsInfo }: ContentCardProps) => {
   return (
     <St.ContentCardWrapper>
       <St.ImageContainer>
-        <img
-          src="http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg"
-          alt=""
-        />
+        <img src={contentsInfo.ITEM_IMAGE} alt="" />
       </St.ImageContainer>
       <div>
         <span style={{ fontSize: '18px', fontWeight: 800 }}>
-          주) 토핑 2배 참치마요
+          {contentsInfo.ITEM_NAME}
         </span>
       </div>
       <St.RatingContainer className="flex">
         <div className="flex-center">
-          <span className="score">4.5</span>
+          <span className="score">{contentsInfo.ITEM_PRICE}</span>
           <span className="icon">별</span>
           <span className="rating_count">(130)</span>
         </div>

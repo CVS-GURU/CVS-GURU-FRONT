@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Footer from 'components/base/Footer';
 import Appbar from 'components/base/Appbar';
 import ModalPortal from 'components/base/ModalPortal';
+import MenuItemWrapper from 'components/base/MenuItemWrapper';
 import ModalContainer from 'components/modal/ModalContainer';
 import { useSelector, RootState } from 'store';
 import { Row, Col } from 'antd';
@@ -12,6 +13,7 @@ import styled from 'styled-components';
 import Filter from 'components/contents/filter/Filter';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
 import { useRouter } from 'next/router';
+
 type Props = {
   children: ReactNode;
 };
@@ -42,6 +44,9 @@ const Layout = ({ children }: Props) => {
   const router = useRouter();
   const isContentsPage = router.pathname.indexOf('/conetents') !== -1;
   const modal = useSelector((state: RootState) => state.modal.modal);
+  const isMobileMenuListOpen = useSelector(
+    (state: RootState) => state.common.isMobileMenuListOpen,
+  );
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
@@ -75,10 +80,13 @@ const Layout = ({ children }: Props) => {
     );
   }
 
+  console.log('isMobileMenuListOpen = ', isMobileMenuListOpen);
   return (
     <>
       <St.AllWrapper>
         <Filter />
+        {isMobileMenuListOpen && <MenuItemWrapper />}
+
         <Appbar />
         {/* 모달 포탈 선언 */}
         <ModalPortal

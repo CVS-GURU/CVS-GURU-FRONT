@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 type StyledFilterButtonWrapper = {
@@ -14,6 +15,9 @@ const St = {
     }
     margin-top: 0.5em;
     margin-right: 0.5em;
+    &hover: {
+      color: red;
+    }
   `,
 };
 
@@ -31,7 +35,7 @@ const FilterButton = ({
   isSelected = false,
 }: FilterButtonProps) => {
   const handleButtonClick = (e: any) => {
-    if (handleFilterButtonClick) handleFilterButtonClick(e.target.id);
+    if (handleFilterButtonClick) handleFilterButtonClick(id);
   };
   return (
     <St.FilterButtonWrapper
@@ -44,4 +48,4 @@ const FilterButton = ({
   );
 };
 
-export default FilterButton;
+export default React.memo(FilterButton);

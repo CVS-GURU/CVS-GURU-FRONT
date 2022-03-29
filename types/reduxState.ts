@@ -3,6 +3,7 @@ import { Modal } from '.';
 export interface CommonState {
   validateMode: boolean;
   isSidebarOpen: boolean;
+  isMobileMenuListOpen: boolean;
 }
 
 export type DataState = {
