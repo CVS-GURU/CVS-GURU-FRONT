@@ -39,12 +39,14 @@ const St = {
 
 type FilterButtonData = {
   buttonTitle: string;
+  value: string;
 };
 type FilterContainerProps = {
   filterButtonData: {
     title: string;
+    paramKey: string;
     type: string;
-    buttonData: FilterButtonData[];
+    buttonDatas: FilterButtonData[];
   };
 };
 
@@ -55,7 +57,7 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
   };
   const router = useRouter();
   console.log(router.query);
-
+  const query = router.query;
   const handleFilterButtonClick = (e: any) => {};
   if (filterButtonData.type === 'silder') {
     return (
@@ -72,9 +74,11 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
     <St.FilterContainer>
       <St.FilterTitle>{filterButtonData.title}</St.FilterTitle>
       <St.FilterButtonContainer className="flex-row">
-        {filterButtonData.buttonData.map((buttonData) => {
+        {filterButtonData.buttonDatas.map((buttonData) => {
           return (
             <FilterButton
+              isSelected={buttonData.value === query[filterButtonData.paramKey]}
+              value={buttonData.value}
               title={buttonData.buttonTitle}
               handleFilterButtonClick={handleFilterButtonClick}
             />

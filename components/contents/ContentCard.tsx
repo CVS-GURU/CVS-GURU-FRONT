@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-
+import iconMap from 'lib/iconMap';
+import { StarFilled } from '@ant-design/icons';
 const St = {
   ContentCardWrapper: styled.div`
     padding: 2rem;
@@ -21,8 +22,10 @@ const St = {
     .score {
       font-weight: 700;
     }
-    .icon {
-      color: voilet;
+    .rating-icon {
+      margin-right: 5px;
+      margin-left: 2.5px;
+      color: #ffd341;
     }
     .rating_count {
       font-size: 1.2rem;
@@ -39,6 +42,7 @@ type ContentCardProps = {
     ITEM_IMAGE: string;
   };
 };
+<span className="rating-icon"></span>;
 const ContentCard = ({ contentsInfo }: ContentCardProps) => {
   return (
     <St.ContentCardWrapper>
@@ -53,7 +57,7 @@ const ContentCard = ({ contentsInfo }: ContentCardProps) => {
       <St.RatingContainer className="flex">
         <div className="flex-center">
           <span className="score">{contentsInfo.ITEM_PRICE}</span>
-          <span className="icon">별</span>
+          <span className="icon">{iconMap.StarFilled}</span>
           <span className="rating_count">(130)</span>
         </div>
       </St.RatingContainer>

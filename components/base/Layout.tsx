@@ -50,7 +50,8 @@ const Layout = ({ children }: Props) => {
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
-  const size: Size = useWindowSize();
+  const { isMobileSize } = useWindowSize();
+
   const dispatch = useDispatch();
   const closeModal = () => {
     if (!modal.isNeedBackgroundClickBlock) {
@@ -68,7 +69,7 @@ const Layout = ({ children }: Props) => {
     </Row>
   );
 
-  if (isContentsPage && size && size.width && size?.width >= 1024) {
+  if (isContentsPage && !isMobileSize) {
     body = (
       <Row>
         <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>

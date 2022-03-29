@@ -7,6 +7,7 @@ import {
   LeftOutlined,
   MenuOutlined,
   UserOutlined,
+  StarFilled,
 } from '@ant-design/icons';
 
 const Iconmap: { [unit: string]: object } = {
@@ -18,6 +19,7 @@ const Iconmap: { [unit: string]: object } = {
   LeftOutlined: <LeftOutlined />,
   MenuOutlined: <MenuOutlined />,
   UserOutlined: <UserOutlined />,
+  StarFilled: <StarFilled />,
 };
 
 export default Iconmap;

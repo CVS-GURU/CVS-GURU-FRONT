@@ -9,12 +9,14 @@ const St = {
     cursor: pointer;
     border-radius: 20px;
     padding: 1.2rem;
-    border: 2px solid black;
+    border: ${(props) =>
+      props.isSelected ? '2px solid #a400d4' : '2px solid black'};
     span {
       font-weight: bold;
     }
     margin-top: 0.5em;
     margin-right: 0.5em;
+    color: ${(props) => props.isSelected && '#a400d4'};
     &hover: {
       color: red;
     }
@@ -22,27 +24,23 @@ const St = {
 };
 
 type FilterButtonProps = {
-  id: string;
-  title: string;
-  handleFilterButtonClick?: (key: string) => void;
   isSelected?: boolean;
+  value?: string;
+  title?: string;
+  handleFilterButtonClick?: (key: string) => void;
 };
 
 const FilterButton = ({
-  id,
+  isSelected = false,
+  value,
   title = '',
   handleFilterButtonClick,
-  isSelected = false,
 }: FilterButtonProps) => {
   const handleButtonClick = (e: any) => {
-    if (handleFilterButtonClick) handleFilterButtonClick(id);
+    if (handleFilterButtonClick) handleFilterButtonClick(value);
   };
   return (
-    <St.FilterButtonWrapper
-      isSelected={isSelected}
-      onClick={handleButtonClick}
-      id={id}
-    >
+    <St.FilterButtonWrapper isSelected={isSelected} onClick={handleButtonClick}>
       <span>{title}</span>
     </St.FilterButtonWrapper>
   );

@@ -102,20 +102,20 @@ export const filterButtonDataList = [
     title: '카테고리',
     paramKey: 'category',
     type: 'button',
-    buttonData: [
-      { buttonTitle: '즉석식품', value: '' },
-      { buttonTitle: '간편식사', value: '' },
-      { buttonTitle: '과자류', value: '' },
-      { buttonTitle: '아이스크림', value: '' },
-      { buttonTitle: '식품', value: '' },
-      { buttonTitle: '음료', value: '' },
+    buttonDatas: [
+      { buttonTitle: '즉석식품', value: 'instant' },
+      { buttonTitle: '간편식사', value: 'single' },
+      { buttonTitle: '과자류', value: 'snack' },
+      { buttonTitle: '아이스크림', value: 'icecream' },
+      { buttonTitle: '식품', value: 'food' },
+      { buttonTitle: '음료', value: 'drink' },
     ],
   },
   {
     title: '가격순',
     paramKey: 'price',
     type: 'button',
-    buttonData: [
+    buttonDatas: [
       { buttonTitle: '전체', value: 'all' },
       { buttonTitle: '1,000이하', value: '0~1000' },
       { buttonTitle: '1,000 ~ 5,000', value: '1000~5000' },
@@ -127,13 +127,13 @@ export const filterButtonDataList = [
     title: '평점순',
     paramKey: 'rating',
     type: 'silder',
-    buttonData: [],
+    buttonDatas: [],
   },
   {
     title: '편의점',
     paramKey: 'cvs',
     type: 'button',
-    buttonData: [
+    buttonDatas: [
       { buttonTitle: '전체', value: 'all' },
       { buttonTitle: 'CU', value: 'cu' },
       { buttonTitle: 'GS', value: 'gs25' },

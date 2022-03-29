@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { StarFilled } from '@ant-design/icons';
+import iconMap from 'lib/iconMap';
+import useWindowSize, { Size } from 'hooks/useWindowSize';
 const St = {
   Title: styled.div`
     margin: 5rem 0;
@@ -8,6 +9,9 @@ const St = {
   `,
   RankTrendWrapper: styled.div`
     margin: 5rem 0;
+    @media (max-width: 720px) {
+      justify-content: center;
+    }
   `,
   RankItemWrapper: styled.div`
     padding: 1rem 0;
@@ -52,9 +56,7 @@ const RankItem = ({ rank = 1 }) => {
         </div>
         <div>
           <span className="rating">4.5</span>
-          <span className="rating-icon">
-            <StarFilled />
-          </span>
+          <span className="rating-icon">{iconMap.StarFilled}</span>
           <div className="">
             <span className="rating-count">(130)</span>
           </div>
@@ -65,6 +67,7 @@ const RankItem = ({ rank = 1 }) => {
 };
 
 const RankTrand = () => {
+  const { isMobileSize } = useWindowSize();
   return (
     <>
       <hr />
@@ -73,26 +76,30 @@ const RankTrand = () => {
       </St.Title>
       <St.RankTrendWrapper className="flex-space-between">
         <div className="flex-column">
-          <RankItem />
-          <RankItem />
-          <RankItem />
-          <RankItem />
-          <RankItem />
+          <RankItem rank={1} />
+          <RankItem rank={2} />
+          <RankItem rank={3} />
+          <RankItem rank={4} />
+          <RankItem rank={5} />
         </div>
-        <div className="flex-column">
-          <RankItem />
-          <RankItem />
-          <RankItem />
-          <RankItem />
-          <RankItem />
-        </div>
-        <div className="flex-column">
-          <RankItem />
-          <RankItem />
-          <RankItem />
-          <RankItem />
-          <RankItem />
-        </div>
+        {!isMobileSize && (
+          <>
+            <div className="flex-column">
+              <RankItem />
+              <RankItem />
+              <RankItem />
+              <RankItem />
+              <RankItem />
+            </div>
+            <div className="flex-column">
+              <RankItem />
+              <RankItem />
+              <RankItem />
+              <RankItem />
+              <RankItem />
+            </div>
+          </>
+        )}
       </St.RankTrendWrapper>
     </>
   );

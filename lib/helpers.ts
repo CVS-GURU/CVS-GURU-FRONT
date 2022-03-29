@@ -53,3 +53,16 @@ export const makeQueryString = (
   if (!url) return baseUrl;
   return `${baseUrl}?${url}`;
 };
+
+interface Size {
+  width: number | undefined;
+  height: number | undefined;
+}
+export const getIsMobileSize = (size: Size) => {
+  const { width } = size;
+
+  if (width && width <= 720) {
+    return true;
+  }
+  return false;
+};

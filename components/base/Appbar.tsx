@@ -81,8 +81,8 @@ const St = {
 
 const Appbar = () => {
   const dispatch = useDispatch();
-  const size: Size = useWindowSize();
-  const isMoblie = size && size.width && size?.width < 720;
+  const { isMobileSize } = useWindowSize();
+
   const links = [{ name: 'Search', path: '/search' }];
 
   const handleOpenMobileMenu = () => {
@@ -102,10 +102,10 @@ const Appbar = () => {
       </St.HeaderContainerLeft>
       <St.HeaderContaineRight id="right">
         <St.HeaderLinkWrapper className="flex-center">
-          {isMoblie && (
+          {isMobileSize && (
             <div onClick={handleOpenMobileMenu}>{iconMap.MenuOutlined}</div>
           )}
-          {!isMoblie && (
+          {!isMobileSize && (
             <>
               <Link href="/contents">
                 <li>찾아보기</li>

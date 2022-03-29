@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
-
+import { getIsMobileSize } from 'lib/helpers';
 // Define general type for useWindowSize hook, which includes width and height
 export interface Size {
   width: number | undefined;
   height: number | undefined;
 }
+type UseWindowSizeReturn = {
+  windowSize: Size;
+  isMobileSize: boolean;
+};
 // Hook
-function useWindowSize(): Size {
+function useWindowSize(): UseWindowSizeReturn {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
   const [windowSize, setWindowSize] = useState<Size>({
     width: undefined,
     height: undefined,
   });
+  const [isMobileSize, setIsMobileSize] = useState(false);
   useEffect(() => {
     // Handler to call on window resize
     function handleResize() {
@@ -21,6 +26,12 @@ function useWindowSize(): Size {
         width: window.innerWidth,
         height: window.innerHeight,
       });
+      setIsMobileSize(
+        getIsMobileSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }),
+      );
     }
     // Add event listener
     window.addEventListener('resize', handleResize);
@@ -29,7 +40,8 @@ function useWindowSize(): Size {
     // Remove event listener on cleanup
     return () => window.removeEventListener('resize', handleResize);
   }, []); // Empty array ensures that effect is only run on mount
-  return windowSize;
+
+  return { windowSize, isMobileSize };
 }
 
 export default useWindowSize;

@@ -1,16 +1,15 @@
 import { Row, Col } from 'antd';
-import Card from 'components/contents/ContentCard';
+import ContentCard from 'components/contents/ContentCard';
 import FilterButton from 'components/contents/filter/FilterButton';
 import { useDispatch } from 'react-redux';
 import { useSelector, RootState } from 'store';
 import { filterActions } from 'store/filter';
-import { modalActions } from 'store/modal';
 import iconMap from 'lib/iconMap';
-import Filter from 'components/contents/filter/Filter';
 import styled from 'styled-components';
 import { getContents } from 'lib/api/contents';
 import { useRouter } from 'next/router';
 import { useQueryClient, useQuery, useMutation } from 'react-query';
+
 const St = {
   ButtonContainer: styled.div`
     cursor: pointer;
@@ -23,17 +22,16 @@ const St = {
     font-weight: bold;
   `,
 };
-
-const item = {
-  contentesId: '',
-  image_path: '',
-  title: '',
-  description: '',
-  rating: '4.5',
-  review_count: 130,
+type Contents = {
+  ITEM_IMAGE: string;
+  ITEM_NAME: string;
+  ITEM_PRICE: string;
+};
+type ContentsResponse = {
+  HITS: number;
+  CONTENTS: Contents[];
 };
 
-const testArray = [item, item, item, item];
 const Contents = ({ query }: any) => {
   const router = useRouter();
   const isFilterOpen = useSelector(
@@ -50,7 +48,7 @@ const Contents = ({ query }: any) => {
   const queryClient = useQueryClient();
   const url =
     'http://localhost:3031/api/item/get-item-with-price?from=3000&to=4000';
-  const { isLoading, error, data } = useQuery<any[], Error>(
+  const { isLoading, error, data } = useQuery<ContentsResponse, Error>(
     'get-contents',
     () => getContents(url),
   );
@@ -76,7 +74,6 @@ const Contents = ({ query }: any) => {
   // });
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>'An error has occurred: ' + error?.message;</div>;
-
   console.log('data = ', data);
   return (
     <>
@@ -87,35 +84,39 @@ const Contents = ({ query }: any) => {
         </St.ButtonContainer>
         <div className="flex">
           <FilterButton
+            isSelected={'review' === query['order']}
             title="많은 후기순"
             handleFilterButtonClick={handleFilterButtonClick}
-            id="review"
+            value="review"
           />
           <FilterButton
+            isSelected={'most' === query['order']}
             title="인기순"
-            id="most"
+            value="most"
             handleFilterButtonClick={handleFilterButtonClick}
           />
           <FilterButton
+            isSelected={'high' === query['order']}
             title="가격 많은 순"
-            id="high"
+            value="high"
             handleFilterButtonClick={handleFilterButtonClick}
           />
           <FilterButton
+            isSelected={'low' === query['order']}
             title="가격 높은 순"
-            id="low"
+            value="low"
             handleFilterButtonClick={handleFilterButtonClick}
           />
         </div>
       </div>
 
       <Row gutter={[16, 16]}>
-        {data.data &&
-          data.data?.map((contents) => {
+        {data &&
+          data.CONTENTS?.map((content, index) => {
             return (
-              <Col span={12} key={contents.contentesId}>
+              <Col span={12} key={content.ITEM_IMAGE}>
                 <div style={{ paddingTop: '1em' }}>
-                  <Card contentsInfo={contents} />
+                  <ContentCard contentsInfo={content} />
                 </div>
               </Col>
             );
