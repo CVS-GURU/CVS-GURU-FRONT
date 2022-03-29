@@ -61,9 +61,48 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
   const paramkey = filterButtonData.paramKey;
 
   const handleFilterButtonClick = (value: string) => {
-    const filterParams = { ...query, [paramkey]: value };
+    /* 복수 선택 가능하게  */
+    if (paramkey === 'category' || paramkey === 'cvs') {
+      const queryCvs = query[paramkey] as string;
+      if (queryCvs) {
+        let array = queryCvs.split(',');
+        //해당 어레이에 같은게 있는지 검사 할것
+        const isExist = array.includes(value);
+        // 같은게 있으면 제거
+        if (isExist) array = array.filter((item) => item !== value);
+        // 같은게 없으면 추가
+        else array.push(value);
+        const params = array.join();
+        let filterParams = { ...query, [paramkey]: params };
+        const url = makeQueryString('', filterParams);
+        router.push(url);
+      } else {
+        let filterParams = { ...query, [paramkey]: value };
+        const url = makeQueryString('', filterParams);
+        router.push(url);
+      }
+
+      return;
+    }
+
+    let filterParams = {};
+    //같은거 선택시 해제
+    if (query[paramkey] === value) {
+      filterParams = { ...query, [paramkey]: '' };
+    } else {
+      filterParams = { ...query, [paramkey]: value };
+    }
     const url = makeQueryString('', filterParams);
     router.push(url);
+  };
+
+  const getIsSelected = (buttonValue: string) => {
+    //복수
+    if (paramkey === 'category' || paramkey === 'cvs') {
+      return query[paramkey]?.includes(buttonValue);
+    }
+    const isSelected = buttonValue === query[filterButtonData.paramKey];
+    return isSelected;
   };
 
   if (filterButtonData.type === 'silder') {
@@ -84,7 +123,7 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
         {filterButtonData.buttonDatas.map((buttonData) => {
           return (
             <FilterButton
-              isSelected={buttonData.value === query[filterButtonData.paramKey]}
+              isSelected={getIsSelected(buttonData.value)}
               value={buttonData.value}
               title={buttonData.buttonTitle}
               handleFilterButtonClick={handleFilterButtonClick}

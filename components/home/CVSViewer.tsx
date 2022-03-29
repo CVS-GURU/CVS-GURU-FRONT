@@ -15,7 +15,10 @@ const St = {
   `,
 };
 
-const CategoryCard = ({ title }) => {
+type CategoryCardProps = {
+  title: string;
+};
+const CategoryCard = ({ title }: CategoryCardProps) => {
   return (
     <St.CategoryCardWrapper>
       <div style={{ height: '200px' }}>
