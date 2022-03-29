@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Footer from 'components/base/Footer';
@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import Filter from 'components/contents/filter/Filter';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
 import { useRouter } from 'next/router';
+import { setSessionStorage } from 'lib/helpers';
 
 type Props = {
   children: ReactNode;
@@ -59,6 +60,14 @@ const Layout = ({ children }: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (isFilterOpen) {
+      setSessionStorage('filter_on', 'true');
+    } else {
+      setSessionStorage('filter_on', 'false');
+    }
+  }, [isFilterOpen]);
+
   let body = (
     <Row>
       <Col xs={0} sm={2} md={2} lg={3} xl={3}></Col>
@@ -85,7 +94,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <St.AllWrapper>
-        <Filter />
+        <Filter query={router.query} />
         {isMobileMenuListOpen && <MenuItemWrapper />}
 
         <Appbar />

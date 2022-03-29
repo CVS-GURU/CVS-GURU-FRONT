@@ -1,4 +1,5 @@
 import queryString from 'query-string';
+import { NextRouter } from 'next/router';
 //omitByKey는 객체에서 지정된 키를 제거하는 함수다.
 //파라미터 전개 연산자를 사용해서 삭제할 키를 자유롭게 추가할 수 있도록 했다.
 //이 함수에 타입을 추가하려고 한다면 rest 배열에 들어갈 수 있는 문자열의 집합을
@@ -65,4 +66,30 @@ export const getIsMobileSize = (size: Size) => {
     return true;
   }
   return false;
+};
+
+/**
+ * 세션스토리지를 세팅한다.
+ *  * @params key: key, value : value
+ *
+ * @returns void
+ */
+
+export const setSessionStorage = (key: string, value: string) => {
+  if (typeof window !== 'undefined' && sessionStorage) {
+    sessionStorage.setItem(key, JSON.stringify(value));
+  }
+};
+
+/**
+ * 세션스토리지를 조회한다.
+ *  * @params key: key
+ * @returns value
+ */
+
+export const getSessionStorage = (key: string) => {
+  if (typeof window !== 'undefined' && sessionStorage) {
+    return JSON.parse(sessionStorage.getItem(key) as string);
+  }
+  return null;
 };

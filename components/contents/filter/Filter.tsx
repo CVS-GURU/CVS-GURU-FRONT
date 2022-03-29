@@ -8,6 +8,7 @@ import FilterButton from 'components/contents/filter/FilterButton';
 import { filterButtonDataList } from 'lib/staticData';
 import { filterActions } from 'store/filter';
 import iconMap from 'lib/iconMap';
+import { makeQueryString, getSessionStorage } from 'lib/helpers';
 
 type StyledFilterWrapperProps = {
   isFilterOpen: boolean;
@@ -56,9 +57,15 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
     setRating(value);
   };
   const router = useRouter();
-  console.log(router.query);
   const query = router.query;
-  const handleFilterButtonClick = (e: any) => {};
+  const paramkey = filterButtonData.paramKey;
+
+  const handleFilterButtonClick = (value: string) => {
+    const filterParams = { ...query, [paramkey]: value };
+    const url = makeQueryString('', filterParams);
+    router.push(url);
+  };
+
   if (filterButtonData.type === 'silder') {
     return (
       <St.FilterContainer>
@@ -88,7 +95,7 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
     </St.FilterContainer>
   );
 };
-const Filter = () => {
+const Filter = ({ query }: any) => {
   const filterWrapperRef = useRef(null);
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
@@ -99,6 +106,17 @@ const Filter = () => {
   const handleFilterClose = () => {
     dispatch(filterActions.setIsFilterOpen(false));
   };
+
+  /* filter on, off */
+  useEffect(() => {
+    const filterOn = getSessionStorage('filter_on');
+    if (filterOn === 'true') {
+      if (!isFilterOpen) dispatch(filterActions.setIsFilterOpen(true));
+    }
+    if (filterOn === 'false') {
+      if (isFilterOpen) dispatch(filterActions.setIsFilterOpen(false));
+    }
+  }, [query]);
 
   return (
     <St.FilterWrapper

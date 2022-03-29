@@ -1,23 +1,23 @@
 /* eslint-disable no-undef */
-import React from "react";
-import styled, { css } from "styled-components";
-import palette from "../../styles/palette";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import palette from '../../styles/palette';
 
 //* 버튼 색상 구하기
 const getButtonColor = (
   color: string,
   colorReverse: boolean,
-  isSelected?: boolean
+  isSelected?: boolean,
 ) => {
   if (colorReverse) {
     switch (color) {
-      case "red_6":
+      case 'red_6':
         return css`
           border: 2px solid ${palette.red_6};
           color: ${palette.red_6};
           background-color: white;
         `;
-      case "dark_cyan":
+      case 'dark_cyan':
         return css`
           border: 2px solid ${palette.dark_cyan};
           color: ${palette.dark_cyan};
@@ -32,27 +32,27 @@ const getButtonColor = (
     }
   }
   switch (color) {
-    case "red_6":
+    case 'red_6':
       return css`
         color: white;
         background-color: ${palette.red_6};
       `;
-    case "dark_cyan":
+    case 'dark_cyan':
       return css`
         background-color: ${palette.dark_cyan};
         color: white;
       `;
-    case "bittersweet":
+    case 'bittersweet':
       return css`
         background-color: ${palette.bittersweet};
         color: white;
       `;
-    case "amaranth":
+    case 'amaranth':
       return css`
         background-color: ${palette.amaranth};
         color: white;
       `;
-    case "grey":
+    case 'grey':
       return css`
         background-color: ${isSelected ? palette.gray_76 : palette.gray_ca};
         color: rgba(12, 18, 28, 0.87);
@@ -67,26 +67,26 @@ const getButtonColor = (
 };
 
 //* 버튼 크기 구하기
-const getButtonSize = (size: "small" | "medium") => {
+const getButtonSize = (size: 'small' | 'medium') => {
   switch (size) {
-    case "medium":
+    case 'medium':
       return css`
         height: 48px;
       `;
-    case "small":
+    case 'small':
       return css`
         font-size: 14px;
         height: 36px;
       `;
     default:
-      return "";
+      return '';
   }
 };
 
 interface StyledButtonProps {
   width: string | undefined;
   colorReverse: boolean;
-  size: "small" | "medium";
+  size: 'small' | 'medium';
   isSelected?: boolean;
 }
 
@@ -105,7 +105,7 @@ const Container = styled.button<StyledButtonProps>`
   cursor: pointer;
   width: ${(props) => props.width};
   ${(props) =>
-    getButtonColor(props.color || "", props.colorReverse, props.isSelected)};
+    getButtonColor(props.color || '', props.colorReverse, props.isSelected)};
 
   svg {
     margin-right: 12px;
@@ -119,8 +119,8 @@ const Container = styled.button<StyledButtonProps>`
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  color?: "dark_cyan" | "white" | "bittersweet" | "amaranth" | "grey" | "red_6";
-  size?: "small" | "medium";
+  color?: 'dark_cyan' | 'white' | 'bittersweet' | 'amaranth' | 'grey' | 'red_6';
+  size?: 'small' | 'medium';
   width?: string;
   height?: string;
   colorReverse?: boolean;
@@ -132,7 +132,7 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<IProps> = ({
   children,
   color,
-  size = "medium",
+  size = 'medium',
   width,
   height,
   colorReverse = false,

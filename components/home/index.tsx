@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import NormalSlider from 'components/common/slider/NormalSlider';
-import MainSearchInput from 'components/home/MainSearchInput';
+import SearchInput from 'components/common/SearchInput';
 import RankTrand from 'components/home/RankTrand';
 import CVSViewer from 'components/home/CVSViewer';
 import CategoryViewer from 'components/home/CategoryViewer';
@@ -34,7 +34,7 @@ const St = {
 const Home = () => {
   return (
     <div>
-      <MainSearchInput />
+      <SearchInput />
       <St.MainDisplayContainer>
         {/* <St.MainImageContainer style={{ height: '300px' }}>
           <img src="/static/images/home/main.jpg" style={{ width: '100%' }} />
