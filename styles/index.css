@@ -54,3 +54,14 @@ button {
   text-align: center;
   font-size: 14px;
 }
+
+#nprogress .bar {
+  background: linear-gradient(
+    to left,
+    #ef3b36,
+    #ffffff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #ffbb00, 0 0 5px #ffbb00;
+}

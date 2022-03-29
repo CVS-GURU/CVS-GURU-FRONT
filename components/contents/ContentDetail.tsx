@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import RatingInput from 'components/contents/RatingInput';
 import Comment from 'components/contents/Comment';
+import { useQueryClient, useQuery, useMutation } from 'react-query';
+import { getContentsDetail } from 'lib/api/contents';
+import { makeQueryString } from 'lib/helpers';
 const St = {
   ContentDetailWrapper: styled.div`
     padding: 2rem;
@@ -33,20 +36,42 @@ const St = {
     }
   `,
 };
-const ContentDetail = () => {
+
+type ContentDetailProps = {
+  contentsId: string;
+};
+type contentsDetail = {
+  ITEM_CATEGORY: string;
+  ITEM_DESCRIPTION: null;
+  ITEM_ID: string;
+  ITEM_IMAGE: string;
+  ITEM_NAME: string;
+  ITEM_PRICE: string;
+  STORE_KIND: string;
+};
+const ContentDetail = ({ contentsId }: ContentDetailProps) => {
+  const { isLoading, error, data } = useQuery<any, Error>(
+    'get-contents-detail',
+    () =>
+      getContentsDetail(
+        `http://localhost:3031/api/item/get-item-detail?id=${contentsId}`,
+      ),
+  );
+
   return (
     <>
       <St.ContentDetailWrapper>
-        <St.ContentTitle>주) 토핑 2배 참치마요</St.ContentTitle>
+        <St.ContentTitle>
+          {!isLoading && data.CONTENTS[0].ITEM_NAME}
+        </St.ContentTitle>
         <St.ImageContainer>
-          <img
-            src="http://bgf-cu.xcache.kinxcdn.com/product/8801019610110.jpg"
-            alt=""
-          ></img>
+          {!isLoading && <img src={data.CONTENTS[0].ITEM_IMAGE} alt=""></img>}
         </St.ImageContainer>
         <St.RatingContainer>
           <span className="rating">4.0</span>
-          <span className="rating-description">뭐, 나름 괜찮은데</span>
+          <span className="rating-description">
+            {!isLoading && data.CONTENTS[0].ITEM_DESCRIPTION}
+          </span>
         </St.RatingContainer>
       </St.ContentDetailWrapper>
       <div>

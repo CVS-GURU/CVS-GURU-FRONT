@@ -16,7 +16,7 @@ const ContentDetailPage = (props: any) => {
   const { contentsId } = props;
   return (
     <St.Wrapper>
-      <ContentDetail />
+      <ContentDetail contentsId={contentsId} />
     </St.Wrapper>
   );
 };

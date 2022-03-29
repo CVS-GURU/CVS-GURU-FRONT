@@ -5,3 +5,8 @@ export const getContents = async (url: string) => {
   const { data } = await axios.get(url);
   return data.data;
 };
+
+export const getContentsDetail = async (url: string) => {
+  const { data } = await axios.get(url);
+  return data.data;
+};

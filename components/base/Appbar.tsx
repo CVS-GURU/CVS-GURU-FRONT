@@ -116,7 +116,12 @@ const Appbar = () => {
       <St.HeaderContaineRight id="right">
         <St.HeaderLinkWrapper className="flex-center">
           {isMobileSize && (
-            <div onClick={handleOpenMobileMenu}>{iconMap.MenuOutlined}</div>
+            <div
+              style={{ paddingRight: '10px' }}
+              onClick={handleOpenMobileMenu}
+            >
+              {iconMap.MenuOutlined}
+            </div>
           )}
           {!isMobileSize && (
             <>

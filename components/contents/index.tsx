@@ -11,6 +11,9 @@ import { useRouter } from 'next/router';
 import { useQueryClient, useQuery, useMutation } from 'react-query';
 
 const St = {
+  ContentWrapper: styled.div`
+    padding: 1rem;
+  `,
   ButtonContainer: styled.div`
     cursor: pointer;
     flex-wrap: wrap;
@@ -76,7 +79,7 @@ const Contents = ({ query }: any) => {
   if (error) return <div>'An error has occurred: ' + error?.message;</div>;
   console.log('data = ', data);
   return (
-    <>
+    <St.ContentWrapper>
       <div>
         <St.ButtonContainer onClick={handleFilterOpen}>
           {iconMap['FilterOutlined']}
@@ -122,7 +125,7 @@ const Contents = ({ query }: any) => {
             );
           })}
       </Row>
-    </>
+    </St.ContentWrapper>
   );
 };
 
