@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { commonActions } from 'store/common';
 import Link from 'next/link';
 import iconMap from 'lib/iconMap';
+import SearchInput from 'components/common/SearchInput';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
 
 const St = {
@@ -37,6 +39,7 @@ const St = {
       width: 100%;
     }
   `,
+  HeaderContaineCenter: styled.div``,
   HeaderContaineRight: styled.div`
     display: flex;
     flex-direction: row;
@@ -64,11 +67,13 @@ const St = {
         color 0.2s ease;
     }
     li {
+      flex: none;
       font-weight: bold;
       margin: 0 0.8rem;
       font-size: 1.3rem;
       position: relative;
       list-style: none;
+      min-width: 65px;
     }
 
     .active {
@@ -81,6 +86,7 @@ const St = {
 
 const Appbar = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { isMobileSize } = useWindowSize();
 
   const links = [{ name: 'Search', path: '/search' }];
@@ -88,6 +94,8 @@ const Appbar = () => {
   const handleOpenMobileMenu = () => {
     dispatch(commonActions.setIsMobileMenuListOpen(null));
   };
+
+  const isMainPage = router.pathname === '/';
 
   return (
     <St.AppbarWrapper>
@@ -98,8 +106,13 @@ const Appbar = () => {
             {/* <img src="/static/images/logo.png" alt="logo" /> */}
           </St.HeaderContainerLogoWrapper>
         </Link>
-        <input />
       </St.HeaderContainerLeft>
+      {!isMainPage && (
+        <div className="flex-row" style={{ width: '100%' }}>
+          <SearchInput size="small" isPositionAppbar />
+        </div>
+      )}
+
       <St.HeaderContaineRight id="right">
         <St.HeaderLinkWrapper className="flex-center">
           {isMobileSize && (
