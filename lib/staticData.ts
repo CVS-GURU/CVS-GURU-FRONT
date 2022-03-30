@@ -1,10 +1,11 @@
-export const DEFAULT_PAGE_COUNT = 5;
+export const DEFAULT_PAGE_NO = 1;
+export const DEFAULT_PAGE_COUNT = 20;
 export const DEFAULT_THUMBNAIL = 'https://source.unsplash.com/random';
 export const DEFAULT_BOARD_OPTION = {
   value: 0,
   label: '게시판을 선택해주세요',
 };
-export const DEFAULT_PAGE_NO = 1;
+
 export const DIRECTION_TABLE: { [unit: string]: string } = {
   '8': 'BACK',
   '37': 'LEFT',

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Row, Col } from 'antd';
 import ContentCard from 'components/contents/ContentCard';
 import FilterButton from 'components/contents/filter/FilterButton';
@@ -9,6 +10,10 @@ import styled from 'styled-components';
 import { getContents } from 'lib/api/contents';
 import { useRouter } from 'next/router';
 import { useQueryClient, useQuery, useMutation } from 'react-query';
+import { makeQueryString, makeUrl } from 'lib/helpers';
+import { Contents } from 'types';
+import { DEFAULT_PAGE_NO, DEFAULT_PAGE_COUNT } from 'lib/staticData';
+import Pagination from 'components/common/Pagination';
 
 const St = {
   ContentWrapper: styled.div`
@@ -25,11 +30,7 @@ const St = {
     font-weight: bold;
   `,
 };
-type Contents = {
-  ITEM_IMAGE: string;
-  ITEM_NAME: string;
-  ITEM_PRICE: string;
-};
+
 type ContentsResponse = {
   HITS: number;
   CONTENTS: Contents[];
@@ -37,6 +38,7 @@ type ContentsResponse = {
 
 const Contents = ({ query }: any) => {
   const router = useRouter();
+  const [url, setUrl] = useState('http://localhost:3031/api/item/get-items');
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
@@ -44,17 +46,26 @@ const Contents = ({ query }: any) => {
   const handleFilterOpen = () => {
     dispatch(filterActions.setIsFilterOpen(!isFilterOpen));
   };
-  const handleFilterButtonClick = (id: string) => {
-    console.log('id = ', id);
-    router.push(`/contents?order=${id}`);
+  const handleFilterButtonClick = (value: string) => {
+    let url = '';
+    if (query['sort'] === value) url = makeUrl({ ...query, sort: '' }, '');
+    else url = makeUrl({ ...query, sort: value }, '');
+    setUrl(url);
+    router.push(url);
   };
-  const queryClient = useQueryClient();
-  const url =
-    'http://localhost:3031/api/item/get-item-with-price?from=3000&to=4000';
+  useEffect(() => {
+    //price
+    const url = makeUrl(query, 'http://localhost:3031/api/item/get-items');
+    setUrl(url);
+  }, [query]);
+
+  console.log('url=', url);
   const { isLoading, error, data } = useQuery<ContentsResponse, Error>(
     'get-contents',
     () => getContents(url),
   );
+
+  //const queryClient = useQueryClient();
 
   // query 안에 data, isLoading, isSuccess, isError 등 다양한게 있다.
   // const mutation = useMutation(() => getContents(url), {
@@ -75,7 +86,7 @@ const Contents = ({ query }: any) => {
   //       setUserId(userId + 1);
   //   },
   // });
-  if (isLoading) return <div>Loading</div>;
+
   if (error) return <div>'An error has occurred: ' + error?.message;</div>;
   console.log('data = ', data);
   return (
@@ -87,26 +98,26 @@ const Contents = ({ query }: any) => {
         </St.ButtonContainer>
         <div className="flex">
           <FilterButton
-            isSelected={'review' === query['order']}
+            isSelected={'review' === query['sort']}
             title="많은 후기순"
             handleFilterButtonClick={handleFilterButtonClick}
             value="review"
           />
           <FilterButton
-            isSelected={'most' === query['order']}
+            isSelected={'most' === query['sort']}
             title="인기순"
             value="most"
             handleFilterButtonClick={handleFilterButtonClick}
           />
           <FilterButton
-            isSelected={'high' === query['order']}
-            title="가격 많은 순"
+            isSelected={'high' === query['sort']}
+            title="가격 높은 순"
             value="high"
             handleFilterButtonClick={handleFilterButtonClick}
           />
           <FilterButton
-            isSelected={'low' === query['order']}
-            title="가격 높은 순"
+            isSelected={'low' === query['sort']}
+            title="가격 낮은 순"
             value="low"
             handleFilterButtonClick={handleFilterButtonClick}
           />
@@ -114,10 +125,19 @@ const Contents = ({ query }: any) => {
       </div>
 
       <Row gutter={[16, 16]}>
+        {isLoading &&
+          Array.from({ length: DEFAULT_PAGE_COUNT }).map((_, index) => (
+            <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
+              <div style={{ paddingTop: '1em' }}>
+                <ContentCard isLoading />
+              </div>
+            </Col>
+          ))}
+
         {data &&
           data.CONTENTS?.map((content, index) => {
             return (
-              <Col span={12} key={content.ITEM_IMAGE}>
+              <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
                 <div style={{ paddingTop: '1em' }}>
                   <ContentCard contentsInfo={content} />
                 </div>
@@ -125,6 +145,9 @@ const Contents = ({ query }: any) => {
             );
           })}
       </Row>
+      <div className="flex-center">
+        <Pagination query={query} totalCount={data?.HITS ? data.HITS : 0} />
+      </div>
     </St.ContentWrapper>
   );
 };

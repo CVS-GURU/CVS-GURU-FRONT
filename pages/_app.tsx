@@ -13,6 +13,7 @@ import ScrollToTopButton from 'components/common/ScrollToTopButton';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import 'react-loading-skeleton/dist/skeleton.css';
 import 'antd/dist/antd.css';
 import 'styles/index.css';
 import 'slick-carousel/slick/slick.css';

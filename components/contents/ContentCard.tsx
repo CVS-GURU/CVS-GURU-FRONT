@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import iconMap from 'lib/iconMap';
 import Link from 'next/link';
 import { addComma } from 'lib/helpers';
+import { Contents } from 'types';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+
 const St = {
   ContentCardWrapper: styled.div`
     cursor: pointer;
@@ -19,7 +22,7 @@ const St = {
   RatingContainer: styled.div`
     padding: 1rem 0;
     span {
-      padding: 0 2px;
+      padding: 0 4px 0 0;
     }
     .score {
       font-weight: 700;
@@ -38,31 +41,54 @@ const St = {
 };
 
 type ContentCardProps = {
-  contentsInfo: {
-    ITEM_ID: string;
-    ITEM_NAME: string;
-    ITEM_PRICE: string;
-    ITEM_IMAGE: string;
-  };
+  isLoading?: boolean;
+  contentsInfo?: Contents;
 };
-<span className="rating-icon"></span>;
-const ContentCard = ({ contentsInfo }: ContentCardProps) => {
+
+function ImageSkeletonWrapper({ children }: any) {
   return (
-    <Link href={`/contents/${contentsInfo.ITEM_ID}`}>
+    <div
+      style={{
+        display: 'inline-block',
+        width: '200px',
+        height: '200px',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+const ContentCard = ({ isLoading, contentsInfo }: ContentCardProps) => {
+  return (
+    <Link href={`/contents/${contentsInfo?.ITEM_ID}`}>
       <St.ContentCardWrapper>
+        {isLoading && <Skeleton wrapper={ImageSkeletonWrapper} height="100%" />}
         <St.ImageContainer>
-          <img src={contentsInfo.ITEM_IMAGE} alt="" />
+          <img src={contentsInfo?.ITEM_IMAGE} alt="" />
         </St.ImageContainer>
-        <div>
+        <div className="flex-center">
           <span style={{ fontSize: '18px', fontWeight: 800 }}>
-            {contentsInfo.ITEM_NAME}
+            {isLoading && <Skeleton width={70} />}
+            {contentsInfo?.ITEM_NAME}
           </span>
         </div>
-        <St.RatingContainer className="flex">
+        <St.RatingContainer className="flex-center">
           <div className="flex-center">
-            <span className="score">{addComma(contentsInfo.ITEM_PRICE)}원</span>
-            <span className="icon">{iconMap.StarFilled}</span>
-            <span className="rating_count">(130)</span>
+            <span className="score">
+              {isLoading ? (
+                <Skeleton width={50} />
+              ) : (
+                addComma(
+                  contentsInfo?.ITEM_PRICE ? contentsInfo?.ITEM_PRICE : '0',
+                )
+              )}
+            </span>
+            <span className="icon">
+              {isLoading ? <Skeleton width={15} /> : iconMap.StarFilled}
+            </span>
+            <span className="rating_count">
+              {(isLoading && <Skeleton width={30} />) || '(130)'}
+            </span>
           </div>
         </St.RatingContainer>
       </St.ContentCardWrapper>

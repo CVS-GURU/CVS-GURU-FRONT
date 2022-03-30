@@ -104,3 +104,24 @@ export const addComma = (num: string) => {
   }
   return '0';
 };
+
+export const makeUrl = (query: any, baseUrl: string) => {
+  console.log(query);
+  let filter = { ...query };
+  if (query['price']) {
+    if (query['price'] === 'all') {
+      //기존 파람 제거 및 from , to 클리어
+      filter = { ...query, price: '', from: '', to: '' };
+    } else if (query['price'] !== 'all') {
+      const priceSplit = query['price'].split('~');
+      const from = priceSplit[0];
+      const to = priceSplit[1];
+      //기존 파람 제거
+      filter = { ...query, price: '', from, to };
+    }
+  }
+
+  const url = makeQueryString(baseUrl, filter);
+  console.log(url);
+  return url;
+};
