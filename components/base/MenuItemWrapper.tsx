@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import iconMap from 'lib/iconMap';
 import { useDispatch } from 'react-redux';
 import { commonActions } from 'store/common';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+
+type StyledMenuItemProps = {
+  isSelected: boolean;
+};
 const St = {
   MenuItemWrapper: styled.div`
     min-height: 100vh;
@@ -18,10 +24,14 @@ const St = {
       cursor: pointer;
     }
   `,
-  MenuItem: styled.div`
+  MenuItem: styled.div<StyledMenuItemProps>`
     cursor: pointer;
     padding: 2rem;
     border-bottom: 1px solid;
+    a {
+      text-decoration: none;
+      color: black;
+    }
   `,
 };
 
@@ -30,6 +40,8 @@ const MenuItemWrapper = () => {
   const handleClose = () => {
     dispatch(commonActions.setIsMobileMenuListOpen(false));
   };
+  const router = useRouter();
+
   return (
     <St.MenuItemWrapper className="flex-column">
       <St.MenuItemWrapperTitle className="flex-center">
@@ -39,9 +51,18 @@ const MenuItemWrapper = () => {
         </span>
       </St.MenuItemWrapperTitle>
 
-      <St.MenuItem>찾아보기</St.MenuItem>
-      <St.MenuItem>Rank</St.MenuItem>
-      <St.MenuItem>About</St.MenuItem>
+      <St.MenuItem isSelected={router.asPath === '/'}>
+        <Link href="/">HOME</Link>
+      </St.MenuItem>
+      <St.MenuItem isSelected={router.asPath === '/contents'}>
+        <Link href="/contents">찾아보기</Link>
+      </St.MenuItem>
+      <St.MenuItem isSelected={router.asPath === '/rank'}>
+        <Link href="/rank">Rank</Link>
+      </St.MenuItem>
+      <St.MenuItem isSelected={router.asPath === '/about'}>
+        <Link href="/about">About</Link>
+      </St.MenuItem>
     </St.MenuItemWrapper>
   );
 };

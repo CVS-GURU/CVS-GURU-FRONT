@@ -19,12 +19,16 @@ import { FilterReduxState } from 'types';
 
 const initialState: FilterReduxState = {
   isFilterOpen: false,
+  searchQuery: '',
 };
 
 const filter = createSlice({
   name: 'filter',
   initialState,
   reducers: {
+    setSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+    },
     setIsFilterOpen(state, action: PayloadAction<boolean>) {
       state.isFilterOpen = action.payload;
     },

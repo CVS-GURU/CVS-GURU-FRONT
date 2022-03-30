@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Input } from 'components/common';
 import styled from 'styled-components';
 
-import MailIcon from '../public/static/svg/auth/mail.svg';
-import OpenedEyeIcon from '../public/static/svg/auth/opened_eye.svg';
-import ClosedEyeIcon from '../public/static/svg/auth/closed_eye.svg';
+import MailIcon from '../../public/static/svg/auth/mail.svg';
+import OpenedEyeIcon from '../../public/static/svg/auth/opened_eye.svg';
+import ClosedEyeIcon from '../../public/static/svg/auth/closed_eye.svg';
 
 const St = {
   LoginWrapper: styled.div`

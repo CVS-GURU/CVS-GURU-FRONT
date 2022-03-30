@@ -21,4 +21,5 @@ export type ModalReduxState = {
 
 export type FilterReduxState = {
   isFilterOpen: boolean;
+  searchQuery: string;
 };

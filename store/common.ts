@@ -2,19 +2,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CommonState } from 'types';
 
-export const getDatasThunk = createAsyncThunk(
-  'board/getDatas',
-  // eslint-disable-next-line consistent-return
-  async (_, thunkAPI) => {
-    try {
-      const response = await getDatas();
-      const datas = response.data;
-      return datas;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
-    }
-  },
-);
+// export const getDatasThunk = createAsyncThunk(
+//   'board/getDatas',
+//   // eslint-disable-next-line consistent-return
+//   async (_, thunkAPI) => {
+//     try {
+//       const response = await getDatas();
+//       const datas = response.data;
+//       return datas;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue({ error: error.message });
+//     }
+//   },
+// );
 
 const initialState: CommonState = {
   validateMode: false,

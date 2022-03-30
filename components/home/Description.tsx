@@ -45,7 +45,11 @@ const St = {
     font-weight: bold;
   `,
 };
-const DescriptionItem = ({ icon, title }) => {
+type DescriptionItemProps = {
+  icon: string;
+  title: string;
+};
+const DescriptionItem = ({ icon, title }: DescriptionItemProps) => {
   return (
     <St.DescriptionCard>
       <St.IconContainer className="flex-center">

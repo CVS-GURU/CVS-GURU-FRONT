@@ -20,6 +20,16 @@ const St = {
     &hover: {
       color: red;
     }
+
+    @media (max-width: 993px) {
+      font-size: 1.5rem;
+    }
+    @media (max-width: 815px) {
+      font-size: 1.3rem;
+    }
+    @media (max-width: 600px) {
+      font-size: 1.1rem;
+    }
   `,
 };
 
@@ -32,7 +42,7 @@ type FilterButtonProps = {
 
 const FilterButton = ({
   isSelected = false,
-  value,
+  value = '',
   title = '',
   handleFilterButtonClick,
 }: FilterButtonProps) => {

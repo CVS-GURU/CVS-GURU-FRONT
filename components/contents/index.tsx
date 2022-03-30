@@ -36,7 +36,7 @@ type ContentsResponse = {
   CONTENTS: Contents[];
 };
 
-const Contents = ({ query }: any) => {
+const ContentsComponent = ({ query }: any) => {
   const router = useRouter();
   const [url, setUrl] = useState('http://localhost:3031/api/item/get-items');
   const isFilterOpen = useSelector(
@@ -152,4 +152,4 @@ const Contents = ({ query }: any) => {
   );
 };
 
-export default Contents;
+export default ContentsComponent;

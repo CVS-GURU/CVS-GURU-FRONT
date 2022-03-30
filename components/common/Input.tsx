@@ -1,7 +1,7 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react';
+import styled, { css } from 'styled-components';
 
-import palette from "styles/palette";
+import palette from 'styles/palette';
 
 type ContainerStyledProps = {
   iconExist: boolean;
@@ -19,7 +19,7 @@ const Container = styled.div<ContainerStyledProps>`
     position: relative;
     width: 100%;
     height: 46px;
-    padding: ${({ iconExist }) => (iconExist ? "0 44px 0 11px " : "0 11px")};
+    padding: ${({ iconExist }) => (iconExist ? '0 44px 0 11px ' : '0 11px')};
     border: 1px solid ${palette.gray_eb};
     border-radius: 4px;
     font-size: 16px;
@@ -35,6 +35,7 @@ const Container = styled.div<ContainerStyledProps>`
     position: absolute;
     right: 11px;
     height: 46px;
+    top: 16px;
   }
   .input-error-message {
     margin-top: 8px;

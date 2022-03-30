@@ -40,7 +40,11 @@ const St = {
     }
   `,
 };
-const SliderItem = ({ item, idx }) => {
+type SliderItemProps = {
+  item: any;
+  idx: number;
+};
+const SliderItem = ({ item, idx }: SliderItemProps) => {
   const router = useRouter();
   const cntId = '';
   const title = item.title;
@@ -76,7 +80,7 @@ const SliderRender = forwardRef<Slider, SliderRenderProps>((props, ref) => {
     </Slider>
   );
 });
-type NormalSliderProps = {};
+type NormalSliderProps = { title: string };
 
 const NormalSlider: React.FC<NormalSliderProps> = ({ title }) => {
   const router = useRouter();
@@ -93,15 +97,16 @@ const NormalSlider: React.FC<NormalSliderProps> = ({ title }) => {
     infinite: false,
     slidesToShow: 4,
     slidesToScroll: 4,
+    arrow: false,
   };
 
-  const slider = useRef(null);
+  const slider = useRef<any>(null);
 
   const next = () => {
-    slider.current.slickNext();
+    if (slider && slider.current !== null) slider.current.slickNext();
   };
   const previous = () => {
-    slider.current.slickPrev();
+    if (slider && slider.current) slider.current.slickPrev();
   };
 
   return (
