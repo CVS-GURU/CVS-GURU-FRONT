@@ -48,6 +48,9 @@ const St = {
       width: 100%;
       border: none;
     }
+    @media (max-width: 420px) {
+      font-size: 1.4rem;
+    }
   `,
   InputButton: styled.button<InputButtonProps>`
     cursor: pointer;
@@ -77,10 +80,8 @@ const MainSearchInput = ({
   size = 'medium',
   isPositionAppbar = false,
 }: MainSearchInputProps) => {
-  const [searchQuertLocal, setSearchQueryLocal] = useState('');
+  // const [searchQueryLocal, setSearchQueryLocal] = useState('');
   const [isFocusInput, setIsFocueInput] = useState(false);
-
-  useEffect(() => {}, [router.query]);
 
   const handleFocus = () => {
     setIsFocueInput(true);
@@ -93,14 +94,22 @@ const MainSearchInput = ({
   const searchQuery = useSelector(
     (state: RootState) => state.filter.searchQuery,
   );
+
   const handleSearchQuery = (e: any) => {
     dispatch(filterActions.setSearchQuery(e.target.value));
   };
 
   const handleSearch = () => {
-    const url = makeUrl({ query: searchQuery }, 'contents');
+    const url = makeUrl({ title: searchQuery }, 'contents');
+    console.log('handleSearch url', url);
     router.push(url);
   };
+
+  useEffect(() => {
+    if (router.query['title']) {
+      dispatch(filterActions.setSearchQuery(router.query['title'] as string));
+    }
+  }, [router.query]);
 
   /* 엔터버튼 클릭시 인풋  */
   useEffect(() => {
@@ -128,7 +137,8 @@ const MainSearchInput = ({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isFocusInput, searchQuery, router.query]);
+  }, [isFocusInput, searchQuery, router.query, handleSearch]);
+
   return (
     <St.SearchInputContainer isPositionAppbar={isPositionAppbar}>
       <div className="flex-space-between">
@@ -139,6 +149,7 @@ const MainSearchInput = ({
             id="search-bar"
             onFocus={handleFocus}
             onBlur={handleBlur}
+            value={searchQuery}
           />
         </St.InputWrapper>
         <St.InputButton size={size} onClick={handleSearch}>
