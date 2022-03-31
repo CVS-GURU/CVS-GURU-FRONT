@@ -10,9 +10,13 @@ type StyledMenuItemProps = {
 };
 const St = {
   MenuItemWrapper: styled.div`
+    background: ${(props) => props.theme.colors.primary};
+    position: absolute;
     min-height: 100vh;
     height: 100%;
     font-weight: 900;
+    z-index: 24;
+    width: 100%;
   `,
   MenuItemWrapperTitle: styled.div`
     position: relative;

@@ -97,7 +97,7 @@ const NormalSlider: React.FC<NormalSliderProps> = ({ title }) => {
     infinite: false,
     slidesToShow: 4,
     slidesToScroll: 4,
-    arrow: false,
+    arrows: false,
   };
 
   const slider = useRef<any>(null);

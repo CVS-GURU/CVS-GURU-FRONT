@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Input } from 'components/common';
+import { Input, Button } from 'components/common';
 import styled from 'styled-components';
-
+import { login } from 'lib/api/auth';
+import { loginThunk } from 'store/auth';
+import { useDispatch } from 'react-redux';
 import MailIcon from '../public/static/svg/auth/mail.svg';
 import OpenedEyeIcon from '../public/static/svg/auth/opened_eye.svg';
 import ClosedEyeIcon from '../public/static/svg/auth/closed_eye.svg';
@@ -36,8 +38,9 @@ const St = {
   `,
 };
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('wsadqeqe');
+  const [password, setPassword] = useState('1234');
 
   const [isPasswordHided, setIsPasswordHided] = useState(true);
   //* 이메일 주소 변경시
@@ -47,27 +50,27 @@ const Login = () => {
 
   //* 비밀번호 변경시
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //* 로그인 클릭시
-    const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      // setValidateMode(true);
-      if (!email || !password) {
-        alert('이메일과 비밀번호를 입력해 주세요.');
-      } else {
-        const loginBody = { email, password };
-
-        try {
-          // const { data } = await loginAPI(loginBody);
-          // dispatch(userActions.setLoggedUser(data));
-          // closeModal();
-        } catch (e) {
-          console.log(e.response);
-        }
-      }
-    };
     setPassword(event.target.value);
   };
 
+  //* 로그인 클릭시
+  const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // setValidateMode(true);
+    if (!email || !password) {
+      alert('이메일과 비밀번호를 입력해 주세요.');
+    } else {
+      const loginBody = { user_id: email, password };
+      dispatch(loginThunk(loginBody));
+      try {
+        // const { data } = await loginAPI(loginBody);
+        // dispatch(userActions.setLoggedUser(data));
+        // closeModal();
+      } catch (e) {
+        console.log(e.response);
+      }
+    }
+  };
   //*비밀번호 숨김 토글하기
   const togglePasswordHiding = () => {
     setIsPasswordHided(!isPasswordHided);
@@ -107,10 +110,13 @@ const Login = () => {
               errorMessage="비밀번호를 입력하세요."
             />
           </St.InputContainer>
-
-          <St.ButtonContainer>
-            <div>Login</div>
-          </St.ButtonContainer>
+          <form onSubmit={onSubmitLogin}>
+            <St.ButtonContainer>
+              <Button type="submit" color="bittersweet">
+                Login
+              </Button>
+            </St.ButtonContainer>
+          </form>
         </div>
       </St.LoginWrapper>
     </div>

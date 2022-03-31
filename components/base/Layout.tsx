@@ -28,6 +28,7 @@ const St = {
   `,
 
   LayoutWrapper: styled.div`
+    padding-top: 85px;
     transition: margin-top 0.2s ease 0s,
       margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     transform: translate3d(0px, 0px, 0px);
