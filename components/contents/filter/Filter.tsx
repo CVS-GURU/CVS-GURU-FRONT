@@ -111,7 +111,9 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
         <St.FilterTitle>{filterButtonData.title}</St.FilterTitle>
         <St.FilterButtonContainer>
           <Slider range min={0} max={5} onChange={handleSilder} />
-          <FilterButton title={rating?.toString()} />
+          <div className="flex-center">
+            <FilterButton title={rating?.toString()} />
+          </div>
         </St.FilterButtonContainer>
       </St.FilterContainer>
     );

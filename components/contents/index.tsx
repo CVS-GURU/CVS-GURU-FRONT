@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useMemo } from 'react';
 import { Row, Col } from 'antd';
 import ContentCard from 'components/contents/ContentCard';
 import FilterButton from 'components/contents/filter/FilterButton';
@@ -15,17 +15,23 @@ import { Contents } from 'types';
 import { DEFAULT_PAGE_NO, DEFAULT_PAGE_COUNT } from 'lib/staticData';
 import Pagination from 'components/common/Pagination';
 
+type StyledButtonContainer = {
+  isFilterSet: boolean;
+};
 const St = {
   ContentWrapper: styled.div`
     padding: 1rem;
   `,
-  ButtonContainer: styled.div`
+  ButtonContainer: styled.div<StyledButtonContainer>`
+    background: ${(props) => (props.isFilterSet ? '#080012' : '')};
+    color: ${(props) => (props.isFilterSet ? 'white' : '')};
+
     cursor: pointer;
     flex-wrap: wrap;
     display: flex;
     padding: 10px;
     border: 2px solid black;
-    width: 80px;
+    width: ${(props) => (props.isFilterSet ? '94px' : '80px')};
     border-radius: 8px;
     font-weight: bold;
   `,
@@ -38,6 +44,7 @@ type ContentsResponse = {
 
 const ContentsComponent = ({ query }: any) => {
   const router = useRouter();
+  const [isFilterSet, setIsFilterSet] = useState(false);
   const [url, setUrl] = useState('http://localhost:3031/api/item/get-items');
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
@@ -46,55 +53,75 @@ const ContentsComponent = ({ query }: any) => {
   const handleFilterOpen = () => {
     dispatch(filterActions.setIsFilterOpen(!isFilterOpen));
   };
-  const handleFilterButtonClick = (value: string) => {
-    let url = '';
-    if (query['sort'] === value) url = makeUrl({ ...query, sort: '' }, '');
-    else url = makeUrl({ ...query, sort: value }, '');
-    setUrl(url);
-    router.push(url);
-  };
+  const handleFilterButtonClick = useCallback(
+    (value: string) => {
+      let url = '';
+      if (query['sort'] === value) url = makeUrl({ ...query, sort: '' }, '');
+      else url = makeUrl({ ...query, sort: value }, '');
+      setUrl(url);
+      router.push(url);
+    },
+    [router, query],
+  );
   useEffect(() => {
-    //price
     const url = makeUrl(query, 'http://localhost:3031/api/item/get-items');
     setUrl(url);
   }, [query]);
 
-  console.log('url=', url);
+  console.log('url=', url, ' query ', query);
   const { isLoading, error, data } = useQuery<ContentsResponse, Error>(
     'get-contents',
     () => getContents(url),
+    { staleTime: 1000 },
   );
 
-  //const queryClient = useQueryClient();
-
-  // query 안에 data, isLoading, isSuccess, isError 등 다양한게 있다.
-  // const mutation = useMutation(() => getContents(url), {
-  //   onMutate: (data: any) => {
-  //     const previousValue = queryClient.getQueryData('get-contents');
-  //     console.log('previousValue', data);
-  //     queryClient.setQueryData('get-contents', (old: any) => {
-  //       console.log('old', old);
-  //       return [...old, data];
-  //     });
-
-  //     return previousValue;
-  //   },
-  //   onSuccess: (result, variables, context) => {
-  //     console.log('성공 메시지:', result);
-  //     console.log('변수', variables);
-  //     console.log('onMutate에서 넘어온 값', context);
-  //       setUserId(userId + 1);
-  //   },
-  // });
+  useEffect(() => {
+    const judgedFilter = () => {
+      if (
+        query['category'] ||
+        query['price'] ||
+        query['rating'] ||
+        query['cvs']
+      )
+        return true;
+      else return false;
+    };
+    setIsFilterSet(judgedFilter);
+  }, [query]);
 
   if (error) return <div>'An error has occurred: ' + error?.message;</div>;
-  console.log('data = ', data);
+  console.log('[seo] url data = ', url, data);
+
+  // const ContentCardList = useMemo(
+  //   () => (
+  //     <>
+  //       {data &&
+  //         data.CONTENTS?.map((content, index) => (
+  //           <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
+  //             <div style={{ paddingTop: '1em' }}>
+  //               <ContentCard contentsInfo={content} />
+  //             </div>
+  //           </Col>
+  //         ))}
+  //     </>
+  //   ),
+  //   [data],
+  // );
+
   return (
     <St.ContentWrapper>
       <div>
-        <St.ButtonContainer onClick={handleFilterOpen}>
+        <St.ButtonContainer
+          onClick={handleFilterOpen}
+          isFilterSet={isFilterSet}
+        >
           {iconMap['FilterOutlined']}
           <span>필터</span>
+          {isFilterSet && (
+            <span style={{ color: '#34c71a', paddingLeft: '2px' }}>
+              {iconMap['CheckCircleFilled']}
+            </span>
+          )}
         </St.ButtonContainer>
         <div className="flex">
           <FilterButton
@@ -134,16 +161,14 @@ const ContentsComponent = ({ query }: any) => {
             </Col>
           ))}
 
-        {data &&
-          data.CONTENTS?.map((content, index) => {
-            return (
-              <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
-                <div style={{ paddingTop: '1em' }}>
-                  <ContentCard contentsInfo={content} />
-                </div>
-              </Col>
-            );
-          })}
+        {/* {data &&
+          data.CONTENTS?.map((content, index) => (
+            <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
+              <div style={{ paddingTop: '1em' }}>
+                <ContentCard contentsInfo={content} />
+              </div>
+            </Col>
+          ))} */}
       </Row>
       <div className="flex-center">
         <Pagination query={query} totalCount={data?.HITS ? data.HITS : 0} />
