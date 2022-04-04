@@ -50,7 +50,7 @@ function ImageSkeletonWrapper({ children }: any) {
     <div
       style={{
         display: 'inline-block',
-        width: '200px',
+        width: '100%',
         height: '200px',
       }}
     >

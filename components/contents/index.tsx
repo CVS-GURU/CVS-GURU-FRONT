@@ -56,6 +56,9 @@ const ContentsComponent = ({ query }: any) => {
   const router = useRouter();
   const [isFilterSet, setIsFilterSet] = useState(false);
   const [url, setUrl] = useState('http://localhost:3031/api/item/get-items');
+  const isContentsFullPage = useSelector(
+    (state: RootState) => state.common.isContentsFullPage,
+  );
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
@@ -106,7 +109,7 @@ const ContentsComponent = ({ query }: any) => {
   const ContentCardList = useMemo(() => {
     if (data && data?.CONTENTS.length === 0) {
       return (
-        <Col span={12} key={`content.ITEM_IMAGE-none`}>
+        <Col span={isContentsFullPage ? 8 : 12} key={`content.ITEM_IMAGE-none`}>
           <div style={{ paddingTop: '1em' }}>'검색된 결과가 없어용'</div>
         </Col>
       );
@@ -115,7 +118,10 @@ const ContentsComponent = ({ query }: any) => {
       <>
         {data &&
           data?.CONTENTS?.map((content, index) => (
-            <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
+            <Col
+              span={isContentsFullPage ? 8 : 12}
+              key={`content.ITEM_IMAGE-${index}`}
+            >
               <div style={{ paddingTop: '1em' }}>
                 <ContentCard contentsInfo={content} />
               </div>
@@ -171,7 +177,10 @@ const ContentsComponent = ({ query }: any) => {
       <Row gutter={[16, 16]}>
         {!data &&
           Array.from({ length: DEFAULT_PAGE_COUNT }).map((_, index) => (
-            <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
+            <Col
+              span={isContentsFullPage ? 8 : 12}
+              key={`content.ITEM_IMAGE-${index}`}
+            >
               <div style={{ paddingTop: '1em' }}>
                 <ContentCard isLoading />
               </div>

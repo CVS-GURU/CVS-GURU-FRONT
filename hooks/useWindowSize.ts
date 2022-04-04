@@ -26,6 +26,13 @@ function useWindowSize(): UseWindowSizeReturn {
         width: window.innerWidth,
         height: window.innerHeight,
       });
+      console.log(
+        'isMobileSize',
+        getIsMobileSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }),
+      );
       setIsMobileSize(
         getIsMobileSize({
           width: window.innerWidth,

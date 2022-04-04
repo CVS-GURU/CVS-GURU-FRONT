@@ -20,6 +20,7 @@ const initialState: CommonState = {
   validateMode: false,
   isSidebarOpen: true,
   isMobileMenuListOpen: false,
+  isContentsFullPage: false,
 };
 
 const common = createSlice({
@@ -35,6 +36,9 @@ const common = createSlice({
         return;
       }
       state.isMobileMenuListOpen = !state.isMobileMenuListOpen;
+    },
+    setContentFullpage(state, action: PayloadAction<boolean>) {
+      state.isContentsFullPage = action.payload;
     },
   },
   extraReducers(builder) {
