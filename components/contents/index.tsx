@@ -35,6 +35,13 @@ const St = {
     border-radius: 8px;
     font-weight: bold;
   `,
+  InfoBoxWrapper: styled.div`
+    padding-top: 1em;
+    justify-content: center;
+    width: 100%;
+    font-size: 2.5rem;
+    font-weight: 900;
+  `,
 };
 
 type ContentsResponse = {
@@ -42,6 +49,9 @@ type ContentsResponse = {
   CONTENTS: Contents[];
 };
 
+const InfoBox = () => {
+  return <div></div>;
+};
 const ContentsComponent = ({ query }: any) => {
   const router = useRouter();
   const [isFilterSet, setIsFilterSet] = useState(false);
@@ -70,11 +80,11 @@ const ContentsComponent = ({ query }: any) => {
 
   console.log('url=', url, ' query ', query);
   const { isLoading, error, data } = useQuery<ContentsResponse, Error>(
-    'get-contents',
+    [`get-contents-${url}`],
     () => getContents(url),
-    { staleTime: 1000 },
+    { staleTime: 10000 },
   );
-
+  console.log('isLoading=', isLoading, ' data ', data);
   useEffect(() => {
     const judgedFilter = () => {
       if (
@@ -90,23 +100,30 @@ const ContentsComponent = ({ query }: any) => {
   }, [query]);
 
   if (error) return <div>'An error has occurred: ' + error?.message;</div>;
+  console.log('isLoading = ', isLoading);
   console.log('[seo] url data = ', url, data);
 
-  // const ContentCardList = useMemo(
-  //   () => (
-  //     <>
-  //       {data &&
-  //         data.CONTENTS?.map((content, index) => (
-  //           <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
-  //             <div style={{ paddingTop: '1em' }}>
-  //               <ContentCard contentsInfo={content} />
-  //             </div>
-  //           </Col>
-  //         ))}
-  //     </>
-  //   ),
-  //   [data],
-  // );
+  const ContentCardList = useMemo(() => {
+    if (data && data?.CONTENTS.length === 0) {
+      return (
+        <Col span={12} key={`content.ITEM_IMAGE-none`}>
+          <div style={{ paddingTop: '1em' }}>'검색된 결과가 없어용'</div>
+        </Col>
+      );
+    }
+    return (
+      <>
+        {data &&
+          data?.CONTENTS?.map((content, index) => (
+            <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
+              <div style={{ paddingTop: '1em' }}>
+                <ContentCard contentsInfo={content} />
+              </div>
+            </Col>
+          ))}
+      </>
+    );
+  }, [data]);
 
   return (
     <St.ContentWrapper>
@@ -152,7 +169,7 @@ const ContentsComponent = ({ query }: any) => {
       </div>
 
       <Row gutter={[16, 16]}>
-        {isLoading &&
+        {!data &&
           Array.from({ length: DEFAULT_PAGE_COUNT }).map((_, index) => (
             <Col span={12} key={`content.ITEM_IMAGE-${index}`}>
               <div style={{ paddingTop: '1em' }}>
@@ -169,6 +186,7 @@ const ContentsComponent = ({ query }: any) => {
               </div>
             </Col>
           ))} */}
+        {ContentCardList}
       </Row>
       <div className="flex-center">
         <Pagination query={query} totalCount={data?.HITS ? data.HITS : 0} />

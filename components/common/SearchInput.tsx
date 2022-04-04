@@ -100,7 +100,7 @@ const MainSearchInput = ({
   };
 
   const handleSearch = () => {
-    const url = makeUrl({ title: searchQuery }, 'contents');
+    const url = makeUrl({ title: searchQuery }, '/contents');
     console.log('handleSearch url', url);
     router.push(url);
   };

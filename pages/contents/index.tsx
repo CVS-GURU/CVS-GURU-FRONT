@@ -1,5 +1,6 @@
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import Contents from 'components/contents';
+import { GetServerSideProps } from 'next';
 import { getContents } from 'lib/api/contents';
 import { makeUrl } from 'lib/helpers';
 import { NextPage } from 'next';
@@ -13,22 +14,29 @@ const ContentsPage: NextPage = (props: any) => {
 
 export default ContentsPage;
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req, query: queryParam }) => {
-      const queryClient = new QueryClient();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  console.log(context);
+  const isCSR =
+    !context.req ||
+    (context.req.url && context.req.url.startsWith('/_next/data'));
+  const queryParam = context.query;
+  const url = makeUrl(queryParam, 'http://localhost:3031/api/item/get-items');
 
-      const url = makeUrl(
-        queryParam,
-        'http://localhost:3031/api/item/get-items',
-      );
-      await queryClient.prefetchQuery('get-contents', () => getContents(url));
+  if (!isCSR) {
+    await queryClient.prefetchQuery(
+      [`get-contents-${url}`],
+      () => getContents(url),
+      {
+        staleTime: 10000,
+      },
+    );
+  }
 
-      return {
-        props: {
-          query: queryParam,
-          dehydratedState: dehydrate(queryClient),
-        },
-      };
+  return {
+    props: {
+      query: queryParam,
+      dehydratedState: dehydrate(queryClient),
     },
-);
+  };
+};

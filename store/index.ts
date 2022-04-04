@@ -4,15 +4,17 @@ import {
   TypedUseSelectorHook,
   useSelector as useReduxSelector,
 } from 'react-redux';
-import data from './data';
+
 import common from './common';
 import filter from './filter';
 import modal from './modal';
+import auth from './auth';
+
 const rootReducer = combineReducers({
-  data: data.reducer,
   common: common.reducer,
   filter: filter.reducer,
   modal: modal.reducer,
+  auth: auth.reducer,
   /* store reducer를 위와 같은 형식처럼 넣어주세요.*/
 });
 

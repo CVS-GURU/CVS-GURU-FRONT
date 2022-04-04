@@ -56,21 +56,24 @@ const ContentDetail = ({ contentsId }: ContentDetailProps) => {
       getContentsDetail(
         `http://localhost:3031/api/item/get-item-detail?id=${contentsId}`,
       ),
+    { staleTime: 10000 },
   );
+
+  console.log('ContentDetail = ', isLoading, data);
 
   return (
     <>
       <St.ContentDetailWrapper>
         <St.ContentTitle>
-          {!isLoading && data.CONTENTS[0].ITEM_NAME}
+          {!isLoading && data?.CONTENTS[0]?.ITEM_NAME}
         </St.ContentTitle>
         <St.ImageContainer>
-          {!isLoading && <img src={data.CONTENTS[0].ITEM_IMAGE} alt=""></img>}
+          {!isLoading && <img src={data?.CONTENTS[0]?.ITEM_IMAGE} alt="" />}
         </St.ImageContainer>
         <St.RatingContainer>
           <span className="rating">4.0</span>
           <span className="rating-description">
-            {!isLoading && data.CONTENTS[0].ITEM_DESCRIPTION}
+            {!isLoading && data?.CONTENTS[0]?.ITEM_DESCRIPTION}
           </span>
         </St.RatingContainer>
       </St.ContentDetailWrapper>
