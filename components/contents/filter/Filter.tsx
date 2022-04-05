@@ -141,6 +141,9 @@ const Filter = ({ query }: any) => {
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
+  const isContentsFullPage = useSelector(
+    (state: RootState) => state.common.isContentsFullPage,
+  );
   const [isFilterClose, setIsFilterClose] = useState(false);
   const dispatch = useDispatch();
 
@@ -171,6 +174,7 @@ const Filter = ({ query }: any) => {
       >
         {iconMap['LeftOutlined']}
       </div>
+
       {filterButtonDataList?.map((filterButtonData, index) => {
         return (
           <FilterContainer filterButtonData={filterButtonData} key={index} />

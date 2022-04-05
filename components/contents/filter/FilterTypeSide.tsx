@@ -30,8 +30,7 @@ const St = {
     transition: padding-top 0.2s ease 0s, width 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     border-right: ${(props) =>
       props.isFilterOpen ? '2px solid rgba(133, 133, 133, 0.1);' : 0}
-    z-index: 11;
-    overflow: initial;
+    overflow: scroll;
     width: ${(props) => (props.isFilterOpen ? '280px' : '0px')};
   `,
   FilterContainer: styled.div`
@@ -148,6 +147,9 @@ const Filter = ({ query }: any) => {
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
+  const isContentsFullPage = useSelector(
+    (state: RootState) => state.common.isContentsFullPage,
+  );
   const [isFilterClose, setIsFilterClose] = useState(false);
   const dispatch = useDispatch();
 
@@ -168,12 +170,6 @@ const Filter = ({ query }: any) => {
 
   return (
     <St.FilterWrapper ref={filterWrapperRef} isFilterOpen={isFilterOpen}>
-      <div
-        onClick={handleFilterClose}
-        style={{ padding: '2rem', cursor: 'pointer', zIndex: 10 }}
-      >
-        {iconMap['LeftOutlined']}
-      </div>
       {isFilterOpen &&
         filterButtonDataList?.map((filterButtonData, index) => {
           return (

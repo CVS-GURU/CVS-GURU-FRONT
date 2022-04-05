@@ -14,27 +14,13 @@ import { makeQueryString, makeUrl } from 'lib/helpers';
 import { Contents } from 'types';
 import { DEFAULT_PAGE_NO, DEFAULT_PAGE_COUNT } from 'lib/staticData';
 import Pagination from 'components/common/Pagination';
+import FilterOnOff from 'components/contents/filter/FilterOnOff';
 
-type StyledButtonContainer = {
-  isFilterSet: boolean;
-};
 const St = {
   ContentWrapper: styled.div`
     padding: 1rem;
   `,
-  ButtonContainer: styled.div<StyledButtonContainer>`
-    background: ${(props) => (props.isFilterSet ? '#080012' : '')};
-    color: ${(props) => (props.isFilterSet ? 'white' : '')};
 
-    cursor: pointer;
-    flex-wrap: wrap;
-    display: flex;
-    padding: 10px;
-    border: 2px solid black;
-    width: ${(props) => (props.isFilterSet ? '94px' : '80px')};
-    border-radius: 8px;
-    font-weight: bold;
-  `,
   InfoBoxWrapper: styled.div`
     padding-top: 1em;
     justify-content: center;
@@ -133,19 +119,8 @@ const ContentsComponent = ({ query }: any) => {
 
   return (
     <St.ContentWrapper>
-      <div>
-        <St.ButtonContainer
-          onClick={handleFilterOpen}
-          isFilterSet={isFilterSet}
-        >
-          {iconMap['FilterOutlined']}
-          <span>필터</span>
-          {isFilterSet && (
-            <span style={{ color: '#34c71a', paddingLeft: '2px' }}>
-              {iconMap['CheckCircleFilled']}
-            </span>
-          )}
-        </St.ButtonContainer>
+      <div style={{ marginTop: '100px' }}>
+        <FilterOnOff isFilterSet={isFilterSet} />
         <div className="flex">
           <FilterButton
             isSelected={'review' === query['sort']}

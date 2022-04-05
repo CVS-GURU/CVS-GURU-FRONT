@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-
+import iconMap from 'lib/iconMap';
 import styled from 'styled-components';
 
 const isServer = typeof window === 'undefined';
 
 const St = {
   ScrollTopButton: styled.div`
+    cursor: pointer;
     position: sticky;
     top: 85%;
     text-align: center;
@@ -16,6 +17,10 @@ const St = {
     height: 2rem;
     bottom: 2rem;
     right: 1rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgb(106 115 125 / 80%);
   `,
 };
 
@@ -38,12 +43,13 @@ const ScrollToTopButton = () => {
   }, []);
   return (
     <St.ScrollTopButton
+      className="flex-center"
       style={{ opacity: isView ? 1 : 0 }}
       onClick={() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       }}
     >
-      ^
+      {iconMap.CaretUpOutlined}
     </St.ScrollTopButton>
   );
 };

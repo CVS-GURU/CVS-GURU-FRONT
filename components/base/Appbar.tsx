@@ -7,6 +7,7 @@ import Link from 'next/link';
 import iconMap from 'lib/iconMap';
 import SearchInput from 'components/common/SearchInput';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
+import { ROUTING_PAGES } from 'lib/staticData';
 
 type StyledAppbarWrapper = {
   isScrollDown: boolean;
@@ -156,6 +157,7 @@ const Appbar = () => {
     };
   }, [router.query]);
 
+  console.log('router.asPath ', router.asPath);
   return (
     <St.AppbarWrapper id="search-app-bar" isScrollDown={isScrollDown}>
       <St.HeaderContainerLeft className="header-container-left flex">
@@ -184,15 +186,21 @@ const Appbar = () => {
           )}
           {!isMobileSize && (
             <>
-              <Link href="/contents">
-                <li>찾아보기</li>
-              </Link>
-              <Link href="/my-page">
-                <li>마이 페이지</li>
-              </Link>
-              <Link href="/about">
-                <li>about</li>
-              </Link>
+              {ROUTING_PAGES.map((link) => {
+                return (
+                  <Link href={link.link}>
+                    <li
+                      style={{
+                        color: router.asPath.includes(link.link)
+                          ? '#a400d4'
+                          : 'black',
+                      }}
+                    >
+                      {link.title}
+                    </li>
+                  </Link>
+                );
+              })}
             </>
           )}
         </St.HeaderLinkWrapper>

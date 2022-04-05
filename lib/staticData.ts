@@ -143,3 +143,12 @@ export const filterButtonDataList = [
     ],
   },
 ];
+
+export const ROUTING_PAGES = [
+  {
+    title: '찾아보기',
+    link: '/contents',
+  },
+  { title: '마이페이지', link: '/my-page' },
+  { title: 'Login', link: '/login' },
+];
