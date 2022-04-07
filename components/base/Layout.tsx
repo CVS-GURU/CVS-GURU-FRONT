@@ -114,12 +114,14 @@ const Layout = ({ children }: Props) => {
     );
   }
 
-  console.log('isMobileMenuListOpen = ', isMobileMenuListOpen);
+  console.log('[seo] isContentsFullPage = ', isContentsFullPage);
   return (
     <>
       <St.AllWrapper>
-        {!isContentsFullPage && <Filter query={router.query} />}
-        {isContentsFullPage && <FilterTypeSide />}
+        {isContentsPage && !isContentsFullPage && (
+          <Filter query={router.query} />
+        )}
+        {isContentsPage && isContentsFullPage && <FilterTypeSide />}
         {isMobileMenuListOpen && <MenuItemWrapper />}
         <Appbar />
         {/* 모달 포탈 선언 */}

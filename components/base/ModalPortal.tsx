@@ -6,8 +6,6 @@ interface IProps {
   children: React.ReactNode;
   modalOpened: boolean;
   closePortal: () => void;
-  isToast: boolean;
-  className: string;
 }
 
 const St = {
@@ -21,8 +19,6 @@ const ModalPortal: React.FC<IProps> = ({
   children,
   modalOpened,
   closePortal,
-  isToast,
-  className,
 }) => {
   const ref = useRef<Element | null>();
   const [mounted, setMounted] = useState(false);
@@ -35,7 +31,7 @@ const ModalPortal: React.FC<IProps> = ({
     }
   }, []);
 
-  if (ref.current && mounted && modalOpened && !isToast) {
+  if (ref.current && mounted && modalOpened) {
     return createPortal(
       <St.ModalWrapper role="presentation" onClick={closePortal}>
         {children}

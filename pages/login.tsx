@@ -39,8 +39,8 @@ const St = {
 };
 const Login = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('wsadqeqe');
-  const [password, setPassword] = useState('1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [isPasswordHided, setIsPasswordHided] = useState(true);
   //* 이메일 주소 변경시
@@ -88,7 +88,7 @@ const Login = () => {
               icon={<MailIcon />}
               value={email}
               onChange={onChangeEmail}
-              isValid={email !== ''}
+              isValid={email !== null}
               errorMessage="이메일이 필요합니다."
             />
           </St.InputContainer>
@@ -106,7 +106,7 @@ const Login = () => {
               }
               value={password}
               onChange={onChangePassword}
-              isValid={password !== ''}
+              isValid={password !== null}
               errorMessage="비밀번호를 입력하세요."
             />
           </St.InputContainer>

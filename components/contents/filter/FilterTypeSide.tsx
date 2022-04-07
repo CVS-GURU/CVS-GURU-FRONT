@@ -9,6 +9,7 @@ import { filterButtonDataList } from 'lib/staticData';
 import { filterActions } from 'store/filter';
 import iconMap from 'lib/iconMap';
 import { makeQueryString, getSessionStorage } from 'lib/helpers';
+import Collapse from 'components/common/Collapse';
 
 type StyledFilterWrapperProps = {
   isFilterOpen: boolean;
@@ -22,8 +23,7 @@ const St = {
     left: 0px;
     display: flex;
     flex-direction: column;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
+
     flex-shrink: 0;
     background-color: ${(props) => props.isSmall && 'rgba(0, 0, 0, 0.8)'};
     height: 100%;
@@ -114,31 +114,33 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
   if (filterButtonData.type === 'silder') {
     return (
       <St.FilterContainer>
-        <St.FilterTitle>{filterButtonData.title}</St.FilterTitle>
-        <St.FilterButtonContainer>
-          <Slider range min={0} max={5} onChange={handleSilder} />
-          <div className="flex-center">
-            <FilterButton title={rating?.toString()} />
-          </div>
-        </St.FilterButtonContainer>
+        <Collapse title={filterButtonData.title}>
+          <St.FilterButtonContainer>
+            <Slider range min={0} max={5} onChange={handleSilder} />
+            <div className="flex-center">
+              <FilterButton title={rating?.toString()} />
+            </div>
+          </St.FilterButtonContainer>
+        </Collapse>
       </St.FilterContainer>
     );
   }
   return (
     <St.FilterContainer>
-      <St.FilterTitle>{filterButtonData.title}</St.FilterTitle>
-      <St.FilterButtonContainer className="flex-row">
-        {filterButtonData.buttonDatas.map((buttonData) => {
-          return (
-            <FilterButton
-              isSelected={getIsSelected(buttonData.value)}
-              value={buttonData.value}
-              title={buttonData.buttonTitle}
-              handleFilterButtonClick={handleFilterButtonClick}
-            />
-          );
-        })}
-      </St.FilterButtonContainer>
+      <Collapse title={filterButtonData.title}>
+        <St.FilterButtonContainer className="flex-row">
+          {filterButtonData.buttonDatas.map((buttonData) => {
+            return (
+              <FilterButton
+                isSelected={getIsSelected(buttonData.value)}
+                value={buttonData.value}
+                title={buttonData.buttonTitle}
+                handleFilterButtonClick={handleFilterButtonClick}
+              />
+            );
+          })}
+        </St.FilterButtonContainer>
+      </Collapse>
     </St.FilterContainer>
   );
 };

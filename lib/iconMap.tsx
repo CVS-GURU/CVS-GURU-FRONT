@@ -10,6 +10,7 @@ import {
   StarFilled,
   CheckCircleFilled,
   CaretUpOutlined,
+  UpOutlined,
 } from '@ant-design/icons';
 
 const Iconmap: { [unit: string]: object } = {
@@ -24,6 +25,7 @@ const Iconmap: { [unit: string]: object } = {
   StarFilled: <StarFilled />,
   CheckCircleFilled: <CheckCircleFilled />,
   CaretUpOutlined: <CaretUpOutlined />,
+  UpOutlined: <UpOutlined />,
 };
 
 export default Iconmap;
