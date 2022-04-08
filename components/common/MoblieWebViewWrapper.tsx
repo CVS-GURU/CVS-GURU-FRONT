@@ -49,7 +49,7 @@ const MoblieWebView = ({ children, query }: any) => {
   const dispatch = useDispatch();
 
   const handleFilterClose = () => {
-    dispatch(commonActions.setIsMobileWebViewOpen(true));
+    dispatch(commonActions.setIsMobileWebViewOpen(false));
   };
 
   /* filter on, off */

@@ -39,7 +39,7 @@ const MenuContainer = () => {
           좋아요 한 후기
         </St.IconTextContainer>
       </St.MenuContainer>
-      <St.MenuContainer>
+      <St.MenuContainer onClick={MenuOpen}>
         <St.IconContainer className="flex-center">
           {iconMap.SearchOutlined}
         </St.IconContainer>
@@ -47,7 +47,7 @@ const MenuContainer = () => {
           최근 검색한 내역
         </St.IconTextContainer>
       </St.MenuContainer>
-      <St.MenuContainer>
+      <St.MenuContainer onClick={MenuOpen}>
         <St.IconContainer className="flex-center">
           {iconMap.CommentOutlined}
         </St.IconContainer>
