@@ -28,6 +28,8 @@ function useWindowSize(): UseWindowSizeReturn {
       });
       console.log(
         'isMobileSize',
+        window.innerWidth,
+        window.innerHeight,
         getIsMobileSize({
           width: window.innerWidth,
           height: window.innerHeight,

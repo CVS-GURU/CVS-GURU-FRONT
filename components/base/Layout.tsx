@@ -6,6 +6,7 @@ import Appbar from 'components/base/Appbar';
 import ModalPortal from 'components/base/ModalPortal';
 import MenuItemWrapper from 'components/base/MenuItemWrapper';
 import ModalContainer from 'components/modal/ModalContainer';
+import MoblieWebViewWrapper from 'components/common/MoblieWebViewWrapper';
 import { useSelector, RootState } from 'store';
 import { Row, Col } from 'antd';
 import { modalActions } from 'store/modal';
@@ -69,6 +70,10 @@ const Layout = ({ children }: Props) => {
   const isFilterOpen = useSelector(
     (state: RootState) => state.filter.isFilterOpen,
   );
+  const isMobileWebViewOpen = useSelector(
+    (state: RootState) => state.common.isMobileWebViewOpen,
+  );
+
   const { isMobileSize } = useWindowSize();
 
   const dispatch = useDispatch();
@@ -121,6 +126,8 @@ const Layout = ({ children }: Props) => {
         {isContentsPage && !isContentsFullPage && (
           <Filter query={router.query} />
         )}
+
+        {<MoblieWebViewWrapper />}
         {isContentsPage && isContentsFullPage && <FilterTypeSide />}
         {isMobileMenuListOpen && <MenuItemWrapper />}
         <Appbar />
@@ -129,8 +136,8 @@ const Layout = ({ children }: Props) => {
           <ModalContainer closeModal={closeModal} />
         </ModalPortal>
         {body}
-        <Footer />
       </St.AllWrapper>
+      <Footer />
     </>
   );
 };

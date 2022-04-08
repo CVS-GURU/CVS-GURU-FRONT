@@ -4,6 +4,7 @@ export interface CommonState {
   validateMode: boolean;
   isSidebarOpen: boolean;
   isMobileMenuListOpen: boolean;
+  isMobileWebViewOpen: boolean;
   isContentsFullPage: boolean;
 }
 

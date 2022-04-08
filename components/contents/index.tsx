@@ -35,7 +35,7 @@ type ContentsResponse = {
   CONTENTS: Contents[];
 };
 
-const InfoBox = () => {
+const InfoBox = ({}) => {
   return <div></div>;
 };
 const ContentsComponent = ({ query }: any) => {
@@ -96,7 +96,9 @@ const ContentsComponent = ({ query }: any) => {
     if (data && data?.CONTENTS.length === 0) {
       return (
         <Col span={isContentsFullPage ? 8 : 12} key={`content.ITEM_IMAGE-none`}>
-          <div style={{ paddingTop: '1em' }}>'검색된 결과가 없어용'</div>
+          <div style={{ paddingTop: '1em', fontSize: '2rem' }}>
+            '검색된 결과가 없어용'
+          </div>
         </Col>
       );
     }

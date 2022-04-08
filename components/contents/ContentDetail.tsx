@@ -22,6 +22,9 @@ const St = {
       height: 100%;
       background-size: cover;
     }
+    @media (max-width: 420px) {
+      min-width: 0;
+    }
   `,
   RatingContainer: styled.div`
     .rating {

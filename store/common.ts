@@ -20,6 +20,7 @@ const initialState: CommonState = {
   validateMode: false,
   isSidebarOpen: true,
   isMobileMenuListOpen: false,
+  isMobileWebViewOpen: false,
   isContentsFullPage: false,
 };
 
@@ -39,6 +40,14 @@ const common = createSlice({
     },
     setContentFullpage(state, action: PayloadAction<boolean>) {
       state.isContentsFullPage = action.payload;
+    },
+
+    setIsMobileWebViewOpen(state, action: PayloadAction<boolean>) {
+      if (action.payload) {
+        state.isMobileWebViewOpen = action.payload;
+        return;
+      }
+      state.isMobileWebViewOpen = !state.isMobileWebViewOpen;
     },
   },
   extraReducers(builder) {

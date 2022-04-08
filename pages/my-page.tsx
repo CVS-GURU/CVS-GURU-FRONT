@@ -1,15 +1,16 @@
 import React from 'react';
 import { NextPage } from 'next';
+import Mypage from 'components/myPage';
 import SignUp from 'components/auth/SignUp';
 
-const Mypage: NextPage = (props: any) => {
+const MypagePage: NextPage = (props: any) => {
   return (
     <>
       <div>
-        <SignUp />
+        <Mypage />
       </div>
     </>
   );
 };
 
-export default Mypage;
+export default MypagePage;

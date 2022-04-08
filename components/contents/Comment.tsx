@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 const St = {
   CommentWrapper: styled.div`
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid;
+    //padding: 1rem;
+    // border-radius: 8px;
+    // border: 1px solid;
     margin: 1rem 0;
   `,
 
@@ -36,7 +36,9 @@ const Comment = () => {
   return (
     <St.CommentWrapper>
       <St.UserInfoContainer className="flex">
-        <St.IconContainer />
+        <div className="flex-center">
+          <St.IconContainer />
+        </div>
         <div style={{ padding: '0 1rem' }}>
           <div className="flex">
             <span className="rating">4.5</span>
