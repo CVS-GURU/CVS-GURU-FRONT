@@ -4,6 +4,9 @@ import iconMap from 'lib/iconMap';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
 import MobileMypage from 'components/myPage//MobileMypage';
 import MenuContainer from 'components/myPage/MenuContainer';
+import { commonActions } from 'store/common';
+import { useDispatch } from 'react-redux';
+import { useSelector, RootState } from 'store';
 import Comment from 'components/contents/Comment';
 const { TabPane } = Tabs;
 
@@ -92,8 +95,14 @@ const Profile = () => {
 
 const Mypage = () => {
   const { isMobileSize } = useWindowSize();
-  console.log('isMobileSize = ', isMobileSize);
-  const callback = () => {};
+  const dispatch = useDispatch();
+  const myPageTabKey = useSelector(
+    (state: RootState) => state.common.myPageTabKey,
+  );
+
+  const tabChange = (key: string) => {
+    dispatch(commonActions.setMyPageTabkey(key));
+  };
   if (isMobileSize) {
     return <MobileMypage />;
   }
@@ -105,7 +114,11 @@ const Mypage = () => {
         </St.Wrapper>
       </St.LeftSide>
       <St.RightSide>
-        <Tabs defaultActiveKey="1" onChange={callback}>
+        <Tabs
+          defaultActiveKey="1"
+          onChange={tabChange}
+          activeKey={myPageTabKey}
+        >
           <TabPane tab="좋아요 한 후기" key="1">
             <Comment />
             <Comment />

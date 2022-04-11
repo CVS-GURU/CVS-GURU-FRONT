@@ -22,16 +22,22 @@ const St = {
 
 const MenuContainer = () => {
   const dispatch = useDispatch();
-  const isMobileWebViewOpen = useSelector(
-    (state: RootState) => state.common.isMobileWebViewOpen,
+  const isMobileSize = useSelector(
+    (state: RootState) => state.common.isMobileSize,
   );
-  const MenuOpen = () => {
-    dispatch(commonActions.setIsMobileWebViewOpen(true));
+
+  const MenuOpen = (menuName: string, key: string) => {
+    if (isMobileSize) {
+      dispatch(commonActions.setWebviewPage(menuName));
+      dispatch(commonActions.setIsMobileWebViewOpen(true));
+      return;
+    }
+    dispatch(commonActions.setMyPageTabkey(key));
   };
 
   return (
     <St.Wrapper className="flex-center">
-      <St.MenuContainer onClick={MenuOpen}>
+      <St.MenuContainer onClick={() => MenuOpen('like-review', '1')}>
         <St.IconContainer className="flex-center">
           {iconMap.HeartOutlined}
         </St.IconContainer>
@@ -39,7 +45,7 @@ const MenuContainer = () => {
           좋아요 한 후기
         </St.IconTextContainer>
       </St.MenuContainer>
-      <St.MenuContainer onClick={MenuOpen}>
+      <St.MenuContainer onClick={() => MenuOpen('recent-search', '2')}>
         <St.IconContainer className="flex-center">
           {iconMap.SearchOutlined}
         </St.IconContainer>
@@ -47,7 +53,7 @@ const MenuContainer = () => {
           최근 검색한 내역
         </St.IconTextContainer>
       </St.MenuContainer>
-      <St.MenuContainer onClick={MenuOpen}>
+      <St.MenuContainer onClick={() => MenuOpen('my-comment', '3')}>
         <St.IconContainer className="flex-center">
           {iconMap.CommentOutlined}
         </St.IconContainer>

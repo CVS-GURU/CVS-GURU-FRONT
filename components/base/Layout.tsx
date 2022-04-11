@@ -1,4 +1,4 @@
-import React, { useEffect, ReactNode } from 'react';
+import React, { useEffect, ReactNode, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Footer from 'components/base/Footer';
@@ -14,6 +14,9 @@ import { commonActions } from 'store/common';
 import styled from 'styled-components';
 import Filter from 'components/contents/filter/Filter';
 import FilterTypeSide from 'components/contents/filter/FilterTypeSide';
+import LikeReview from 'components/myPage/LikeReview';
+import MyComment from 'components/myPage/MyComment';
+import RecentSearch from 'components/myPage/RecentSearch';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
 import { useRouter } from 'next/router';
 import { setSessionStorage } from 'lib/helpers';
@@ -61,6 +64,11 @@ const St = {
 };
 
 const Layout = ({ children }: Props) => {
+  const webviewPage = useSelector(
+    (state: RootState) => state.common.webviewPage,
+  );
+
+  console.log('webviewPage = ', webviewPage);
   const router = useRouter();
   const isContentsPage = router.pathname.indexOf('/contents') !== -1;
   const modal = useSelector((state: RootState) => state.modal.modal);
@@ -73,8 +81,16 @@ const Layout = ({ children }: Props) => {
   const isMobileWebViewOpen = useSelector(
     (state: RootState) => state.common.isMobileWebViewOpen,
   );
+  const isMobileSizeRedux = useSelector(
+    (state: RootState) => state.common.isMobileSize,
+  );
 
   const { isMobileSize } = useWindowSize();
+
+  useEffect(() => {
+    console.log('[seo] isMobileSize=- ', isMobileSize);
+    dispatch(commonActions.setIsMobileSize(isMobileSize));
+  }, [isMobileSize]);
 
   const dispatch = useDispatch();
   const closeModal = () => {
@@ -83,12 +99,18 @@ const Layout = ({ children }: Props) => {
     }
   };
 
+  /* 페이지 전환시 menuListOpen 닫기 */
+  useEffect(() => {
+    dispatch(commonActions.setIsMobileMenuListOpen(false));
+  }, [router.asPath]);
+
   useEffect(() => {
     if (isFilterOpen) {
       setSessionStorage('filter_on', 'true');
     } else {
       setSessionStorage('filter_on', 'false');
     }
+    isMobileSize;
   }, [isFilterOpen]);
 
   let body = (
@@ -118,8 +140,21 @@ const Layout = ({ children }: Props) => {
       </St.LayoutWrapperFull>
     );
   }
+  const getWebviewPageChildren = useCallback(() => {
+    if (webviewPage === 'like-review') {
+      return { component: <LikeReview />, title: '좋아요 한 리뷰' };
+    }
+    if (webviewPage === 'my-comment') {
+      return { component: <MyComment />, title: '내가 남긴 코멘트' };
+    }
+    if (webviewPage === 'recent-search') {
+      return { component: <RecentSearch />, title: '최근 검색한 내역' };
+    }
+    return { component: <div />, title: 'default' };
+  }, [webviewPage]);
 
-  console.log('[seo] isContentsFullPage = ', isContentsFullPage);
+  const WebviewPageChildren = getWebviewPageChildren();
+
   return (
     <>
       <St.AllWrapper>
@@ -127,7 +162,8 @@ const Layout = ({ children }: Props) => {
           <Filter query={router.query} />
         )}
 
-        {<MoblieWebViewWrapper />}
+        <MoblieWebViewWrapper children={WebviewPageChildren} />
+
         {isContentsPage && isContentsFullPage && <FilterTypeSide />}
         {isMobileMenuListOpen && <MenuItemWrapper />}
         <Appbar />

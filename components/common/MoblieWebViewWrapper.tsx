@@ -34,48 +34,40 @@ const St = {
   MoblieWebViewButtonContainer: styled.div``,
 };
 
-type MoblieWebViewButtonData = {
-  buttonTitle: string;
-  value: string;
+type MoblieWebViewProps = {
+  children: any;
+  query?: any;
 };
 
-const MoblieWebView = ({ children, query }: any) => {
+const MoblieWebView = ({ children, query }: MoblieWebViewProps) => {
   const mobileWebviewWrapperRef = useRef(null);
   const isMobileWebViewOpen = useSelector(
     (state: RootState) => state.common.isMobileWebViewOpen,
   );
-
-  // const [isFilterClose, setIsFilterClose] = useState(false);
   const dispatch = useDispatch();
 
   const handleFilterClose = () => {
     dispatch(commonActions.setIsMobileWebViewOpen(false));
   };
 
-  /* filter on, off */
-  // useEffect(() => {
-  //   const filterOn = getSessionStorage('filter_on');
-  //   if (filterOn === 'true') {
-  //     if (!isMobileWebViewOpen) dispatch(filterActions.setIsFilterOpen(true));
-  //   }
-  //   if (filterOn === 'false') {
-  //     if (isMobileWebViewOpen) dispatch(filterActions.setIsFilterOpen(false));
-  //   }
-  // }, [query]);
-
   return (
     <St.MoblieWebViewWrapper
       ref={mobileWebviewWrapperRef}
       isMobileWebViewOpen={isMobileWebViewOpen}
     >
-      <div
-        onClick={handleFilterClose}
-        style={{ padding: '2rem', cursor: 'pointer' }}
-      >
-        {iconMap['LeftOutlined']}
+      <div className="flex">
+        <div
+          onClick={handleFilterClose}
+          style={{ padding: '2rem', cursor: 'pointer' }}
+        >
+          {iconMap['LeftOutlined']}
+        </div>
+        <St.MoblieWebViewTitle style={{ padding: '2rem' }}>
+          {children.title}
+        </St.MoblieWebViewTitle>
       </div>
 
-      {children}
+      {children.component}
     </St.MoblieWebViewWrapper>
   );
 };

@@ -19,15 +19,27 @@ import { CommonState } from 'types';
 const initialState: CommonState = {
   validateMode: false,
   isSidebarOpen: true,
+  isMobileSize: false,
   isMobileMenuListOpen: false,
   isMobileWebViewOpen: false,
   isContentsFullPage: false,
+  webviewPage: '',
+  myPageTabKey: '1',
 };
 
 const common = createSlice({
   name: 'common',
   initialState,
   reducers: {
+    setMyPageTabkey(state, action: PayloadAction<string>) {
+      state.myPageTabKey = action.payload;
+    },
+    setIsMobileSize(state, action: PayloadAction<boolean>) {
+      state.isMobileSize = action.payload;
+    },
+    setWebviewPage(state, action: PayloadAction<string>) {
+      state.webviewPage = action.payload;
+    },
     setIsSidebarOpen(state, action: PayloadAction<boolean>) {
       state.isSidebarOpen = action.payload;
     },

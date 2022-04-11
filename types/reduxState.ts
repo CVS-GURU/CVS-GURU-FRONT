@@ -3,9 +3,12 @@ import { Modal } from '.';
 export interface CommonState {
   validateMode: boolean;
   isSidebarOpen: boolean;
+  isMobileSize: boolean;
   isMobileMenuListOpen: boolean;
   isMobileWebViewOpen: boolean;
   isContentsFullPage: boolean;
+  webviewPage: string;
+  myPageTabKey: string;
 }
 
 export type DataState = {

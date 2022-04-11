@@ -1,5 +1,9 @@
 import { HYDRATE, createWrapper } from 'next-redux-wrapper';
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 import {
   TypedUseSelectorHook,
   useSelector as useReduxSelector,
@@ -43,10 +47,20 @@ const reducer = (state: any, action: any) => {
 //* 타입 지원되는 커스텀 useSelector 만들기
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 
+/*
+  modal callback 함수 위한 세팅 위해 
+  serializableCheck false로 변경 
+*/
+const customizedMiddleware = getDefaultMiddleware({
+  serializableCheck: false,
+});
+
 export const store = configureStore({
   reducer,
+  middleware: customizedMiddleware,
   devTools: true,
 });
+
 const makeStore = () => store;
 
 export const wrapper = createWrapper(makeStore);
