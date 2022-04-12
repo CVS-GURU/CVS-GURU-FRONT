@@ -100,9 +100,9 @@ const Layout = ({ children }: Props) => {
   };
 
   /* 페이지 전환시 menuListOpen 닫기 */
-  useEffect(() => {
-    dispatch(commonActions.setIsMobileMenuListOpen(false));
-  }, [router.asPath]);
+  // useEffect(() => {
+  //   dispatch(commonActions.setIsMobileMenuListOpen(false));
+  // }, [router.asPath]);
 
   useEffect(() => {
     if (isFilterOpen) {
@@ -168,9 +168,9 @@ const Layout = ({ children }: Props) => {
         {isMobileMenuListOpen && <MenuItemWrapper />}
         <Appbar />
         {/* 모달 포탈 선언 */}
-        <ModalPortal closePortal={closeModal}>
+        {/* <ModalPortal closePortal={closeModal}>
           <ModalContainer closeModal={closeModal} />
-        </ModalPortal>
+        </ModalPortal> */}
         {body}
       </St.AllWrapper>
       <Footer />

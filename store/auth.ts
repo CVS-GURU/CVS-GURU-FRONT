@@ -13,7 +13,7 @@ export const SignUpThunk = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
-  },
+  }
 );
 
 export const loginThunk = createAsyncThunk(
@@ -27,7 +27,7 @@ export const loginThunk = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
-  },
+  }
 );
 export const logOutThunk = createAsyncThunk(
   'auth/logOutThunk',
@@ -40,7 +40,7 @@ export const logOutThunk = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
-  },
+  }
 );
 
 export const loadMyInfoThunk = createAsyncThunk(
@@ -53,7 +53,7 @@ export const loadMyInfoThunk = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
-  },
+  }
 );
 
 export const changeNicknameThunk = createAsyncThunk(
@@ -67,7 +67,7 @@ export const changeNicknameThunk = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
-  },
+  }
 );
 
 //* 초기 상태
@@ -88,7 +88,7 @@ const initialState: AuthReduxState = {
   isSignupError: null,
   isChangeNicknameLoading: false, // 닉네임 변경 시도중
   isChangeNicknameDone: false,
-  isChangeNicknameError: null,
+  isChangeNicknameError: null
 };
 
 const auth = createSlice({
@@ -151,8 +151,7 @@ const auth = createSlice({
       .addCase(loadMyInfoThunk.fulfilled, (state, action) => {
         state.isLoadMyInfoLoading = false;
         state.isLoadMyInfoDone = true;
-        state.myInfo = action.payload.data;
-
+        state.myInfo = action.payload.data.data.USER_DATA;
         if (action.payload.data.mem_email !== '') {
           state.isLogged = true;
         }
@@ -177,7 +176,7 @@ const auth = createSlice({
       //   state.changeNicknameLoading = false;
       //   state.changeNicknameError = action.payload;
       // })
-      .addDefaultCase((state) => state),
+      .addDefaultCase((state) => state)
 });
 
 export const authActions = { ...auth.actions };

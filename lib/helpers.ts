@@ -1,5 +1,6 @@
 import queryString from 'query-string';
-import { NextRouter } from 'next/router';
+import CryptoJS from 'crypto-js';
+
 //omitByKey는 객체에서 지정된 키를 제거하는 함수다.
 //파라미터 전개 연산자를 사용해서 삭제할 키를 자유롭게 추가할 수 있도록 했다.
 //이 함수에 타입을 추가하려고 한다면 rest 배열에 들어갈 수 있는 문자열의 집합을
@@ -46,10 +47,10 @@ export const isValidData = (value: any) => {
 
 export const makeQueryString = (
   baseUrl: string,
-  queriesObject: Object & { [key: string]: any },
+  queriesObject: Object & { [key: string]: any }
 ) => {
   const url = queryString.stringify(queriesObject, {
-    skipEmptyString: true,
+    skipEmptyString: true
   });
   if (!url) return baseUrl;
   return `${baseUrl}?${url}`;
@@ -124,4 +125,45 @@ export const makeUrl = (query: any, baseUrl: string) => {
   const url = makeQueryString(baseUrl, filter);
   console.log(url);
   return url;
+};
+
+/**
+ * 텍스트 복호화
+ * @param ciphertext
+ * @returns 복호화 된 text
+ */
+export const decryptWithAES = (ciphertext: string) => {
+  try {
+    const passphrase = 'yna';
+    const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+
+    return bytes.toString(CryptoJS.enc.Utf8);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const encryptPassword = async (password: string) => {
+  const { createHash } = await import('crypto');
+  try {
+    return createHash('sha256').update(password).digest('hex');
+  } catch (error) {
+    console.log('encrypt error ');
+    return null;
+  }
+};
+
+//* "token=value" 를 {token:"value"}로 바꾸는 함수
+export const cookieStringToObject = (cookieString: string | undefined) => {
+  const cookies: { [key: string]: string } = {};
+  if (cookieString) {
+    //* "token=value"
+    const itemString = cookieString?.split(/\s*;\s*/);
+    itemString.forEach((pairs) => {
+      //* ["token","value"]
+      const pair = pairs.split(/\s*=\s*/);
+      cookies[pair[0]] = pair.splice(1).join('=');
+    });
+  }
+  return cookies;
 };

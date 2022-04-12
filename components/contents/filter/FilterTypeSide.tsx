@@ -41,7 +41,7 @@ const St = {
     font-weight: bold;
     font-size: 1.8rem;
   `,
-  FilterButtonContainer: styled.div``,
+  FilterButtonContainer: styled.div``
 };
 
 type FilterButtonData = {
@@ -147,10 +147,10 @@ const FilterContainer = ({ filterButtonData }: FilterContainerProps) => {
 const Filter = ({ query }: any) => {
   const filterWrapperRef = useRef(null);
   const isFilterOpen = useSelector(
-    (state: RootState) => state.filter.isFilterOpen,
+    (state: RootState) => state.filter.isFilterOpen
   );
   const isContentsFullPage = useSelector(
-    (state: RootState) => state.common.isContentsFullPage,
+    (state: RootState) => state.common.isContentsFullPage
   );
   const [isFilterClose, setIsFilterClose] = useState(false);
   const dispatch = useDispatch();

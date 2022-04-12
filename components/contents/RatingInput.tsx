@@ -18,7 +18,7 @@ const St = {
     color: white;
     border: none;
     width: 70px;
-  `,
+  `
 };
 
 const RatingInput = () => {

@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import iconMap from 'lib/iconMap';
-import { useDispatch } from 'react-redux';
-import { useSelector, RootState } from 'store';
-import { commonActions } from 'store/common';
+import styled from 'styled-components'
+import iconMap from 'lib/iconMap'
+import { useDispatch } from 'react-redux'
+import { useSelector, RootState } from 'store'
+import { commonActions } from 'store/common'
 
 const St = {
   Wrapper: styled.div``,
@@ -17,23 +17,23 @@ const St = {
   IconTextContainer: styled.div`
     font-size: 1rem;
     padding: 1rem;
-  `,
-};
+  `
+}
 
 const MenuContainer = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const isMobileSize = useSelector(
-    (state: RootState) => state.common.isMobileSize,
-  );
+    (state: RootState) => state.common.isMobileSize
+  )
 
   const MenuOpen = (menuName: string, key: string) => {
     if (isMobileSize) {
-      dispatch(commonActions.setWebviewPage(menuName));
-      dispatch(commonActions.setIsMobileWebViewOpen(true));
-      return;
+      dispatch(commonActions.setWebviewPage(menuName))
+      dispatch(commonActions.setIsMobileWebViewOpen(true))
+      return
     }
-    dispatch(commonActions.setMyPageTabkey(key));
-  };
+    dispatch(commonActions.setMyPageTabkey(key))
+  }
 
   return (
     <St.Wrapper className="flex-center">
@@ -62,7 +62,7 @@ const MenuContainer = () => {
         </St.IconTextContainer>
       </St.MenuContainer>
     </St.Wrapper>
-  );
-};
+  )
+}
 
-export default MenuContainer;
+export default MenuContainer

@@ -22,7 +22,7 @@ const St = {
     width: ${(props) => (props.isFilterSet ? '94px' : '80px')};
     border-radius: 8px;
     font-weight: bold;
-  `,
+  `
 };
 
 const FilterOnOff = ({ isFilterSet }: FilterOnOffProps) => {
@@ -31,7 +31,7 @@ const FilterOnOff = ({ isFilterSet }: FilterOnOffProps) => {
     dispatch(filterActions.setIsFilterOpen(!isFilterOpen));
   };
   const isFilterOpen = useSelector(
-    (state: RootState) => state.filter.isFilterOpen,
+    (state: RootState) => state.filter.isFilterOpen
   );
   return (
     <div>

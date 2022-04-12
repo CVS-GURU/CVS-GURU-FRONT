@@ -27,7 +27,7 @@ const St = {
     width: 100%;
     font-size: 2.5rem;
     font-weight: 900;
-  `,
+  `
 };
 
 type ContentsResponse = {
@@ -43,15 +43,17 @@ const ContentsComponent = ({ query }: any) => {
   const [isFilterSet, setIsFilterSet] = useState(false);
   const [url, setUrl] = useState('http://localhost:3031/api/item/get-items');
   const isContentsFullPage = useSelector(
-    (state: RootState) => state.common.isContentsFullPage,
+    (state: RootState) => state.common.isContentsFullPage
   );
   const isFilterOpen = useSelector(
-    (state: RootState) => state.filter.isFilterOpen,
+    (state: RootState) => state.filter.isFilterOpen
   );
   const dispatch = useDispatch();
+
   const handleFilterOpen = () => {
     dispatch(filterActions.setIsFilterOpen(!isFilterOpen));
   };
+
   const handleFilterButtonClick = useCallback(
     (value: string) => {
       let url = '';
@@ -60,18 +62,20 @@ const ContentsComponent = ({ query }: any) => {
       setUrl(url);
       router.push(url);
     },
-    [router, query],
+    [router, query]
   );
+
   useEffect(() => {
     const url = makeUrl(query, 'http://localhost:3031/api/item/get-items');
     setUrl(url);
   }, [query]);
 
   console.log('url=', url, ' query ', query);
+
   const { isLoading, error, data } = useQuery<ContentsResponse, Error>(
     [`get-contents-${url}`],
     () => getContents(url),
-    { staleTime: 10000 },
+    { staleTime: 10000 }
   );
   console.log('isLoading=', isLoading, ' data ', data);
   useEffect(() => {
@@ -92,16 +96,25 @@ const ContentsComponent = ({ query }: any) => {
   console.log('isLoading = ', isLoading);
   console.log('[seo] url data = ', url, data);
 
-  const ContentCardList = useMemo(() => {
+  const ContentCardList = useCallback(() => {
     if (data && data?.CONTENTS.length === 0) {
       return (
         <Col span={isContentsFullPage ? 8 : 12} key={`content.ITEM_IMAGE-none`}>
-          <div style={{ paddingTop: '1em', fontSize: '2rem' }}>
-            '검색된 결과가 없어용'
+          <div
+            className="flex-center"
+            style={{
+              paddingTop: '1em',
+              fontSize: '2rem',
+              fontWeight: 900,
+              width: '100%'
+            }}
+          >
+            <span>'검색된 결과가 없어용!'</span>
           </div>
         </Col>
       );
     }
+
     return (
       <>
         {data &&
@@ -117,7 +130,7 @@ const ContentsComponent = ({ query }: any) => {
           ))}
       </>
     );
-  }, [data]);
+  }, [data, isContentsFullPage]);
 
   return (
     <St.ContentWrapper>
@@ -172,7 +185,7 @@ const ContentsComponent = ({ query }: any) => {
               </div>
             </Col>
           ))} */}
-        {ContentCardList}
+        <ContentCardList />
       </Row>
       <div className="flex-center">
         <Pagination query={query} totalCount={data?.HITS ? data.HITS : 0} />

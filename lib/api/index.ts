@@ -1,6 +1,6 @@
-import Axios from 'axios';
+import Axios from 'axios'
 
-// Axios.defaults.withCredentials = true; // front, backend 간 쿠키공유
+Axios.defaults.withCredentials = true // front, backend 간 쿠키공유
 
 //import { cacheAdapterEnhancer } from 'axios-extensions';
 //axios 정의
@@ -15,7 +15,7 @@ const axios = Axios.create({
   //   { enabledByDefault: false }
   //   //enabledByDefault false <=  모든 네트워크 요청에 캐싱된 데이터 사용 x
   // ),
-  timeout: 3000,
-});
+  timeout: 3000
+})
 
-export default axios;
+export default axios

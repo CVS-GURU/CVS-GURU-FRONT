@@ -19,7 +19,7 @@ const St = {
     width: 300px;
     border: 1px solid #cbcbcb;
     border-radius: 16px;
-  `,
+  `
 };
 
 // const Comment = () => {
@@ -54,17 +54,24 @@ const St = {
 // };
 
 const Profile = () => {
+  const myInfo = useSelector((state: RootState) => state.auth.myInfo);
+  const editProfile = () => {};
+
   return (
     <>
       <div style={{ borderBottom: '1px solid #cbcbcb', padding: '1.5rem' }}>
         <div className="flex-center">
-          <img src="" alt="" style={{ width: '80px', height: '80px' }} />
+          <img
+            src={myInfo?.USER_PROFILE_IMAGE}
+            alt=""
+            style={{ width: '80px', height: '80px' }}
+          />
         </div>
         <div
           className="flex-center"
           style={{ margin: '1rem', fontSize: '1.6rem', fontWeight: 900 }}
         >
-          <span>렁렁이</span> <span>#423</span>
+          <span>{myInfo?.USER_NAME}</span> <span>#{myInfo?.USER_NICKNAME}</span>
         </div>
         <div
           className="flex-center"
@@ -81,8 +88,9 @@ const Profile = () => {
               padding: '1rem',
               width: '150px',
               fontSize: '1.5rem',
-              fontWeight: 900,
+              fontWeight: 900
             }}
+            onClick={editProfile}
           >
             수정
           </div>
@@ -97,7 +105,7 @@ const Mypage = () => {
   const { isMobileSize } = useWindowSize();
   const dispatch = useDispatch();
   const myPageTabKey = useSelector(
-    (state: RootState) => state.common.myPageTabKey,
+    (state: RootState) => state.common.myPageTabKey
   );
 
   const tabChange = (key: string) => {
