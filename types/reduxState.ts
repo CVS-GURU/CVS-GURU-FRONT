@@ -48,3 +48,5 @@ export type AuthReduxState = {
   isChangeNicknameDone: boolean;
   isChangeNicknameError: any;
 };
+
+export type ItemReduxState = {};

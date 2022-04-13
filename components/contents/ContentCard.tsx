@@ -37,7 +37,7 @@ const St = {
       color: grey;
       font-weight: 700;
     }
-  `,
+  `
 };
 
 type ContentCardProps = {
@@ -51,7 +51,7 @@ function ImageSkeletonWrapper({ children }: any) {
       style={{
         display: 'inline-block',
         width: '100%',
-        height: '200px',
+        height: '200px'
       }}
     >
       {children}
@@ -79,7 +79,7 @@ const ContentCard = ({ isLoading, contentsInfo }: ContentCardProps) => {
                 <Skeleton width={50} />
               ) : (
                 addComma(
-                  contentsInfo?.ITEM_PRICE ? contentsInfo?.ITEM_PRICE : '0',
+                  contentsInfo?.ITEM_PRICE ? contentsInfo?.ITEM_PRICE : '0'
                 )
               )}
             </span>

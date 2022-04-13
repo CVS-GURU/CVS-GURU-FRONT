@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import RatingInput from 'components/contents/RatingInput';
-import Comment from 'components/contents/Comment';
+import CommentList from 'components/contents/CommentList';
 import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { getContentsDetail } from 'lib/api/contents';
 import { makeQueryString } from 'lib/helpers';
@@ -9,6 +9,7 @@ const St = {
     padding: 2rem;
     border-bottom: 1px solid grey;
   `,
+
   ContentTitle: styled.div`
     font-size: 4rem;
     font-weight: 800;
@@ -37,7 +38,7 @@ const St = {
       font-size: 3.3rem;
       font-weight: 800;
     }
-  `,
+  `
 };
 
 type ContentDetailProps = {
@@ -57,10 +58,12 @@ const ContentDetail = ({ contentsId }: ContentDetailProps) => {
     'get-contents-detail',
     () =>
       getContentsDetail(
-        `http://localhost:3031/api/item/get-item-detail?id=${contentsId}`,
+        `http://localhost:3031/api/item/get-item-detail?id=${contentsId}`
       ),
-    { staleTime: 10000 },
+    { staleTime: 10000 }
   );
+
+  //getItemComment
 
   console.log('ContentDetail = ', isLoading, data);
 
@@ -81,8 +84,8 @@ const ContentDetail = ({ contentsId }: ContentDetailProps) => {
         </St.RatingContainer>
       </St.ContentDetailWrapper>
       <div>
-        <RatingInput />
-        <Comment />
+        <RatingInput contentsId={contentsId} />
+        <CommentList contentsId={contentsId} />
       </div>
     </>
   );

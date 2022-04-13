@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import moment from 'moment';
 const St = {
   CommentWrapper: styled.div`
     //padding: 1rem;
@@ -30,9 +31,19 @@ const St = {
   `,
   CommentTextContainer: styled.div`
     text-align: left;
-  `,
+  `
 };
-const Comment = () => {
+
+type CommentProps = {
+  commentInfo: {
+    USER_ID: string;
+    ITEM_SCORE: number;
+    ITEM_COMMENT: string;
+    INSERT_DATE: string;
+    UPDATE_DATE: string;
+  };
+};
+const Comment = ({ commentInfo }: CommentProps) => {
   return (
     <St.CommentWrapper>
       <St.UserInfoContainer className="flex">
@@ -41,18 +52,18 @@ const Comment = () => {
         </div>
         <div style={{ padding: '0 1rem' }}>
           <div className="flex">
-            <span className="rating">4.5</span>
+            <span className="rating">{commentInfo?.ITEM_SCORE}</span>
           </div>
           <div className="flex">
-            <div className="user-name">익명</div>
-            <div className="date">2022.3.24</div>
+            <div className="user-name">{commentInfo?.USER_ID}</div>
+            <div className="date">
+              {moment(commentInfo?.UPDATE_DATE).format('YYYY년 MM월 DD일 ')}
+            </div>
           </div>
         </div>
       </St.UserInfoContainer>
       <St.CommentTextContainer>
-        <span>
-          생각보다 별로임; 걍 일반적인 참치마요 맛임, 솔직히 평가를 할 수가;
-        </span>
+        <span>{commentInfo?.ITEM_COMMENT}</span>
       </St.CommentTextContainer>
     </St.CommentWrapper>
   );
