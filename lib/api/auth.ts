@@ -1,5 +1,6 @@
 import axios from '.';
 import { UserTypeRes, SingUpAPIParams } from 'types/user';
+import request from 'lib/api/request';
 import { encryptPassword } from 'lib/helpers';
 //* 회원가입 body
 

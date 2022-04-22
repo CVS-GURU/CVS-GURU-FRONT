@@ -1,7 +1,7 @@
 export type UserTypeRes = {
-  status: number;
-  message: string;
-  data: UserType;
+  data: number;
+  reason: string;
+  result: any;
 };
 
 export type UserType = {

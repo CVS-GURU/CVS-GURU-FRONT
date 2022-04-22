@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Input, Button } from 'components/common';
 import styled from 'styled-components';
 import { login } from 'lib/api/auth';
+import { useSelector, RootState } from 'store';
 import { loginThunk } from 'store/auth';
 import { useDispatch } from 'react-redux';
 import MailIcon from '../public/static/svg/auth/mail.svg';
 import OpenedEyeIcon from '../public/static/svg/auth/opened_eye.svg';
 import ClosedEyeIcon from '../public/static/svg/auth/closed_eye.svg';
+import { toast } from 'react-toastify';
 
 const St = {
   LoginWrapper: styled.div`
@@ -35,13 +37,15 @@ const St = {
     padding: 1rem;
     text-align: center;
     font-weight: 900;
-  `,
+  `
 };
 const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const isLoginLoading = useSelector(
+    (state: RootState) => state.auth.isLoginLoading
+  );
   const [isPasswordHided, setIsPasswordHided] = useState(true);
   //* 이메일 주소 변경시
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,9 +60,20 @@ const Login = () => {
   //* 로그인 클릭시
   const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isLoginLoading) {
+      return;
+    }
     // setValidateMode(true);
     if (!email || !password) {
-      alert('이메일과 비밀번호를 입력해 주세요.');
+      toast.error('이메일이나 비밀번호를 입력해주세요.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
     } else {
       const loginBody = { user_id: email, password };
       dispatch(loginThunk(loginBody));

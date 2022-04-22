@@ -65,3 +65,18 @@ button {
 #nprogress .peg {
   box-shadow: 0 0 10px #ffbb00, 0 0 5px #ffbb00;
 }
+input[type='password'] {
+  font-family: '굴림';
+}
+::placeholder {
+  font-family: '나눔스퀘어', 'NanumSquare', sans-serif;
+  opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-family: '나눔스퀘어', 'NanumSquare', sans-serif;
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  font-family: '나눔스퀘어', 'NanumSquare', sans-serif;
+}

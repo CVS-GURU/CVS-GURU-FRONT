@@ -27,13 +27,13 @@ const St = {
 
   ButtonContainer: styled.div`
     margin: 1rem 0;
-    background: black;
+
     border-radius: 4px;
     color: white;
     padding: 1rem;
     text-align: center;
     font-weight: 900;
-  `,
+  `
 };
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -47,25 +47,25 @@ const Login = () => {
 
   //* 비밀번호 변경시
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //* 로그인 클릭시
-    const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      // setValidateMode(true);
-      if (!email || !password) {
-        alert('이메일과 비밀번호를 입력해 주세요.');
-      } else {
-        const loginBody = { email, password };
-
-        try {
-          // const { data } = await loginAPI(loginBody);
-          // dispatch(userActions.setLoggedUser(data));
-          // closeModal();
-        } catch (e) {
-          console.log(e.response);
-        }
-      }
-    };
     setPassword(event.target.value);
+  };
+  //* 로그인 클릭시
+  const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // setValidateMode(true);
+    if (!email || !password) {
+      alert('이메일과 비밀번호를 입력해 주세요.');
+    } else {
+      const loginBody = { email, password };
+
+      try {
+        // const { data } = await loginAPI(loginBody);
+        // dispatch(userActions.setLoggedUser(data));
+        // closeModal();
+      } catch (e) {
+        console.log(e.response);
+      }
+    }
   };
 
   //*비밀번호 숨김 토글하기
@@ -108,7 +108,7 @@ const Login = () => {
             />
           </St.InputContainer>
 
-          <St.ButtonContainer>
+          <St.ButtonContainer onClick={onSubmitLogin}>
             <div>Login</div>
           </St.ButtonContainer>
         </div>

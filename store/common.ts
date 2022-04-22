@@ -25,12 +25,26 @@ const initialState: CommonState = {
   isContentsFullPage: false,
   webviewPage: '',
   myPageTabKey: '1',
+
+  page1: 0,
+  page2: 0,
+  page3: 0
 };
 
 const common = createSlice({
   name: 'common',
   initialState,
   reducers: {
+    setPage1(state, action: PayloadAction<number>) {
+      state.page1 = action.payload;
+    },
+    setPage2(state, action: PayloadAction<number>) {
+      state.page2 = action.payload;
+    },
+    setPage3(state, action: PayloadAction<number>) {
+      state.page3 = action.payload;
+    },
+
     setMyPageTabkey(state, action: PayloadAction<string>) {
       state.myPageTabKey = action.payload;
     },
@@ -60,7 +74,7 @@ const common = createSlice({
         return;
       }
       state.isMobileWebViewOpen = !state.isMobileWebViewOpen;
-    },
+    }
   },
   extraReducers(builder) {
     /*------------------------------------------------------ */
@@ -82,7 +96,7 @@ const common = createSlice({
     //   state.isDatasError = action.error.message;
     //   state.datas = [];
     // });
-  },
+  }
 });
 export const commonActions = { ...common.actions };
 

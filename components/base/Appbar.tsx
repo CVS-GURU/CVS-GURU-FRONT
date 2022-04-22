@@ -8,6 +8,7 @@ import iconMap from 'lib/iconMap';
 import SearchInput from 'components/common/SearchInput';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
 import { ROUTING_PAGES } from 'lib/staticData';
+import { useSelector, RootState } from 'store';
 
 type StyledAppbarWrapper = {
   isScrollDown: boolean;
@@ -96,7 +97,7 @@ const St = {
       li {
       }
     }
-  `,
+  `
 };
 
 const delta = 2;
@@ -106,6 +107,9 @@ let fixBoxHeight = 0;
 const isServer = typeof window === 'undefined';
 const Appbar = () => {
   const dispatch = useDispatch();
+  const isMobileWebViewOpen = useSelector(
+    (state: RootState) => state.common.isMobileWebViewOpen
+  );
   const router = useRouter();
   const { isMobileSize } = useWindowSize();
   const [isScrollDown, setIsScrollDown] = useState(false);
@@ -193,7 +197,7 @@ const Appbar = () => {
                       style={{
                         color: router.asPath.includes(link.link)
                           ? '#a400d4'
-                          : 'black',
+                          : 'black'
                       }}
                     >
                       {link.title}

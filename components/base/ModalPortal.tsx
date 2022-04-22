@@ -13,12 +13,12 @@ const St = {
     position: absolute;
     z-index: 9999;
     width: 100%;
-  `,
+  `
 };
 const ModalPortal: React.FC<IProps> = ({
   children,
   modalOpened,
-  closePortal,
+  closePortal
 }) => {
   const ref = useRef<Element | null>();
   const [mounted, setMounted] = useState(false);
@@ -36,7 +36,7 @@ const ModalPortal: React.FC<IProps> = ({
       <St.ModalWrapper role="presentation" onClick={closePortal}>
         {children}
       </St.ModalWrapper>,
-      ref.current,
+      ref.current
     );
   }
   return null;

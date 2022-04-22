@@ -9,6 +9,10 @@ export interface CommonState {
   isContentsFullPage: boolean;
   webviewPage: string;
   myPageTabKey: string;
+
+  page1: number;
+  page2: number;
+  page3: number;
 }
 
 export type DataState = {

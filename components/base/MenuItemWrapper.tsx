@@ -36,7 +36,7 @@ const St = {
       text-decoration: none;
       color: black;
     }
-  `,
+  `
 };
 
 const MenuItemWrapper = () => {
@@ -66,6 +66,9 @@ const MenuItemWrapper = () => {
       </St.MenuItem>
       <St.MenuItem isSelected={router.asPath === '/about'}>
         <Link href="/about">About</Link>
+      </St.MenuItem>
+      <St.MenuItem isSelected={router.asPath === '/my-page'}>
+        <Link href="/My-page">My-page</Link>
       </St.MenuItem>
     </St.MenuItemWrapper>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, ReactNode, useCallback } from 'react';
+import React, { useState, useEffect, ReactNode, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Footer from 'components/base/Footer';
@@ -7,6 +7,7 @@ import ModalPortal from 'components/base/ModalPortal';
 import MenuItemWrapper from 'components/base/MenuItemWrapper';
 import ModalContainer from 'components/modal/ModalContainer';
 import MoblieWebViewWrapper from 'components/common/MoblieWebViewWrapper';
+import { ToastContainer, toast } from 'react-toastify';
 import { useSelector, RootState } from 'store';
 import { Row, Col } from 'antd';
 import { modalActions } from 'store/modal';
@@ -19,7 +20,7 @@ import MyComment from 'components/myPage/MyComment';
 import RecentSearch from 'components/myPage/RecentSearch';
 import useWindowSize, { Size } from 'hooks/useWindowSize';
 import { useRouter } from 'next/router';
-import { setSessionStorage } from 'lib/helpers';
+import { setSessionStorage, getIsMobileSize } from 'lib/helpers';
 
 type Props = {
   children: ReactNode;
@@ -52,6 +53,7 @@ const St = {
   `,
 
   LayoutWrapperFull: styled.div<StyledFilterWrapperProps>`
+    padding-top: 85px;
     width: ${(props) => (props.isFilterOpen ? 'calc(100% - 280px)' : '100%')};
     margin-left: ${(props) =>
       props.isFilterOpen && !props.isSmall ? '280px' : '0'};
@@ -60,37 +62,42 @@ const St = {
     transition: margin-top 0.2s ease 0s,
       margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     transform: translate3d(0px, 0px, 0px);
-  `,
+  `
 };
 
 const Layout = ({ children }: Props) => {
   const webviewPage = useSelector(
-    (state: RootState) => state.common.webviewPage,
+    (state: RootState) => state.common.webviewPage
   );
-
-  console.log('webviewPage = ', webviewPage);
   const router = useRouter();
-  const isContentsPage = router.pathname.indexOf('/contents') !== -1;
+  const contentsId = router.query?.contentsId;
+  const isContentsPage =
+    router.pathname.indexOf('/contents') !== -1 && !contentsId;
   const modal = useSelector((state: RootState) => state.modal.modal);
   const isMobileMenuListOpen = useSelector(
-    (state: RootState) => state.common.isMobileMenuListOpen,
+    (state: RootState) => state.common.isMobileMenuListOpen
   );
   const isFilterOpen = useSelector(
-    (state: RootState) => state.filter.isFilterOpen,
+    (state: RootState) => state.filter.isFilterOpen
   );
+
   const isMobileWebViewOpen = useSelector(
-    (state: RootState) => state.common.isMobileWebViewOpen,
+    (state: RootState) => state.common.isMobileWebViewOpen
   );
+
   const isMobileSizeRedux = useSelector(
-    (state: RootState) => state.common.isMobileSize,
+    (state: RootState) => state.common.isMobileSize
   );
 
   const { isMobileSize } = useWindowSize();
 
   useEffect(() => {
-    console.log('[seo] isMobileSize=- ', isMobileSize);
+    const isMobileSize = getIsMobileSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
     dispatch(commonActions.setIsMobileSize(isMobileSize));
-  }, [isMobileSize]);
+  }, [router.pathname, isMobileSize]);
 
   const dispatch = useDispatch();
   const closeModal = () => {
@@ -99,18 +106,12 @@ const Layout = ({ children }: Props) => {
     }
   };
 
-  /* 페이지 전환시 menuListOpen 닫기 */
-  // useEffect(() => {
-  //   dispatch(commonActions.setIsMobileMenuListOpen(false));
-  // }, [router.asPath]);
-
   useEffect(() => {
     if (isFilterOpen) {
       setSessionStorage('filter_on', 'true');
     } else {
       setSessionStorage('filter_on', 'false');
     }
-    isMobileSize;
   }, [isFilterOpen]);
 
   let body = (
@@ -126,12 +127,15 @@ const Layout = ({ children }: Props) => {
       </St.HomeSection>
     </St.LayoutWrapper>
   );
+  const [isContentsFullPage, setIsContentsFullPage] = useState(false);
 
-  const isContentsFullPage = isContentsPage && !isMobileSize;
+  useEffect(() => {
+    setIsContentsFullPage(isContentsPage && !isMobileSize);
+  }, [isContentsPage, isMobileSize]);
 
   useEffect(() => {
     dispatch(commonActions.setContentFullpage(isContentsFullPage));
-  }, [isContentsFullPage]);
+  }, [router.pathname, isContentsFullPage]);
 
   if (isContentsFullPage) {
     body = (
@@ -161,16 +165,16 @@ const Layout = ({ children }: Props) => {
         {isContentsPage && !isContentsFullPage && (
           <Filter query={router.query} />
         )}
-
+        <ToastContainer />
         <MoblieWebViewWrapper children={WebviewPageChildren} />
 
         {isContentsPage && isContentsFullPage && <FilterTypeSide />}
         {isMobileMenuListOpen && <MenuItemWrapper />}
         <Appbar />
         {/* 모달 포탈 선언 */}
-        {/* <ModalPortal closePortal={closeModal}>
+        <ModalPortal closePortal={closeModal}>
           <ModalContainer closeModal={closeModal} />
-        </ModalPortal> */}
+        </ModalPortal>
         {body}
       </St.AllWrapper>
       <Footer />

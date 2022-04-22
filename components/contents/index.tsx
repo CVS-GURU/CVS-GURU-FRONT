@@ -42,6 +42,7 @@ const ContentsComponent = ({ query }: any) => {
   const router = useRouter();
   const [isFilterSet, setIsFilterSet] = useState(false);
   const [url, setUrl] = useState('http://localhost:3031/api/item/get-items');
+
   const isContentsFullPage = useSelector(
     (state: RootState) => state.common.isContentsFullPage
   );
@@ -95,7 +96,7 @@ const ContentsComponent = ({ query }: any) => {
   if (error) return <div>'An error has occurred: ' + error?.message;</div>;
   console.log('isLoading = ', isLoading);
   console.log('[seo] url data = ', url, data);
-
+  console.log('isContentsFullPage !!!!!!!!!!', isContentsFullPage);
   const ContentCardList = useCallback(() => {
     if (data && data?.CONTENTS.length === 0) {
       return (

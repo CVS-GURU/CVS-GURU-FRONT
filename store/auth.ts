@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { signup, login, logout, loadMyInfo } from 'lib/api/auth';
 import { SingUpAPIParams, AuthReduxState, LoginAPIParams } from 'types';
+import { toast } from 'react-toastify';
 
 export const SignUpThunk = createAsyncThunk(
   'auth/SignUpThunk',
@@ -102,16 +103,46 @@ const auth = createSlice({
         state.isLoginLoading = true;
         state.isLoginDone = false;
         state.isLoginError = null;
+        toast('로그인 중입니다.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.isLoginLoading = false;
-        state.myInfo = action.payload.data;
-        state.isLoginDone = true;
-        state.isLogged = true;
+        if (action.payload.data.result === '0000') {
+          state.myInfo = action.payload.data;
+          state.isLoginDone = true;
+          state.isLogged = true;
+        } else {
+          toast.error('이메일이나 비밀번호를 확인해주세요!', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+          });
+        }
       })
       .addCase(loginThunk.rejected, (state, action) => {
         state.isLoginLoading = false;
         state.isLoginError = action.payload;
+        toast.error('이메일이나 비밀번호를 확인해주세요!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
       })
       // logout
       .addCase(logOutThunk.pending, (state) => {
@@ -151,9 +182,10 @@ const auth = createSlice({
       .addCase(loadMyInfoThunk.fulfilled, (state, action) => {
         state.isLoadMyInfoLoading = false;
         state.isLoadMyInfoDone = true;
-        state.myInfo = action.payload.data.data.USER_DATA;
-        if (action.payload.data.mem_email !== '') {
-          state.isLogged = true;
+        console.log(action.payload.data);
+        if (action.payload.data.data) {
+          state.myInfo = action.payload.data.data.USER_DATA;
+          state.isLogged = false;
         }
       })
       .addCase(loadMyInfoThunk.rejected, (state, action) => {
